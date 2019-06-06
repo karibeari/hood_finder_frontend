@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-// import MapContainer from "./Map/MapContainer";
 import MapboxContainer from "./Map/MapboxContainer";
 
 const URLbase = "http://localhost:3000/neighborhoods"
@@ -23,7 +22,6 @@ class App extends React.Component {
     return(
       <div className="App">
         <MapboxContainer neighborhoods={this.state.neighborhoods}/>
-
       </div >
     )
   }
