@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  height: 100vh;
+  width: auto;
 }
 
 .App-logo {
@@ -17,6 +19,14 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.mapboxgl-map {
+  height: 100vh;
+  width: auto;
+}
+.mapboxgl-canary {
+  visibility: visible;
 }
 
 .App-link {
