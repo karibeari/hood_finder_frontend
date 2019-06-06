@@ -1,26 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+// import MapContainer from "./Map/MapContainer";
+import MapboxContainer from "./Map/MapboxContainer";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const URLbase = "http://localhost:3000/neighborhoods"
+
+class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      neighborhoods: []
+    }
+  }
+
+  componentDidMount() {
+    fetch(URLbase)
+    .then(resp => resp.json())
+    .then(neighborhoods => this.setState({ neighborhoods }))
+  }
+
+  render(){
+    return(
+      <div className="App">
+        <MapboxContainer neighborhoods={this.state.neighborhoods}/>
+
+      </div >
+    )
+  }
+
 }
 
 export default App;

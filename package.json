@@ -3,8 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@urbica/react-map-gl": "^1.6.0",
+    "google-map-react": "^1.1.4",
+    "google-maps-react": "^2.0.2",
+    "google-react-maps": "^1.5.0",
+    "lodash": "^4.17.11",
+    "mapbox-gl": "^1.0.0",
+    "point-in-polygon": "^1.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-map-gl": "^5.0.2",
+    "react-mapbox-gl": "^4.4.0",
     "react-scripts": "3.0.1"
   },
   "scripts": {
