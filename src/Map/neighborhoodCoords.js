@@ -28,10 +28,7 @@ const neighborhoodCoords = data.map((feature) => {
   neighborhood.id = feature.properties.nbhd_id
   neighborhood.coordinates = []
   feature.geometry.coordinates.flat().map(hood => {
-        _.chunk(hood.flat(), 2).map(coord => {
-
-        neighborhood.coordinates.push([coord[0], coord[1]])
-      })
+    return _.chunk(hood.flat(), 2).map(coord => neighborhood.coordinates.push([coord[0], coord[1]]))
     })
     return neighborhood
 })

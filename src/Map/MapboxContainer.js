@@ -1,23 +1,37 @@
 import React, { Component } from "react";
 import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import MapMarker from './MapMarker';
 import neighborhoodCoords from './neighborhoodCoords'
 
+
 const Map = ReactMapboxGl({
-  accessToken: "pk.eyJ1Ijoia2FyaWZlcmVuY3p5IiwiYSI6ImNqd2t0cjllZjBxOHU0YXBjeHhncHVscWgifQ.f6ckouYcZFsUJwYDDRamyw"
+  accessToken: ""
 });
 
 const initialState = {
-  displayPopulation: false,
-  displayOver65: false,
-  displayUnder18: false
+  population: {display: false},
+  over65: {display: false},
+  under18: {display: false}
 }
 
 export default class MapboxContainer extends Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = { ...initialState }
   }
+
+
+
+  displaySchools = () => {
+    const schools = this.props.schools || []
+    console.log(this.props.schools)
+    return schools.map(school => {
+      return <MapMarker school={school} />
+    })
+    // console.log(this.props.schools)
+  }
+
 
   colorPolygon = (neighborhood, color) => {
     return <Layer key={neighborhood.id}
@@ -109,54 +123,24 @@ export default class MapboxContainer extends Component {
   })
 
   clearPolygons = () => neighborhoodCoords.map( mapNeighborhood => {
-    let color = "#C0C3E1"
+    let color = "#000"
     return this.colorPolygon(mapNeighborhood, color)
   })
 
-  makePolygons = filter => {
-    switch (filter) {
-      case ("population"):
-        this.populationPolygons()
-        break;
-      case ("over65"):
-        this.over65Polygons()
-        break;
-      case ("under18"):
-        this.under18Polygons()
-        break;
-      default:
-        break;
-    }
-  }
-
-  toggleDisplayPopulation = () => {
-
+  toggleFilter = (event) => {
     this.setState({
       ...initialState,
-      displayPopulation: !this.state.displayPopulation
-
-    })
-  }
-  toggleDisplayOver65 = () => {
-    this.setState({
-      ...initialState,
-      displayOver65: !this.state.displayOver65
-    })
-  }
-  toggleDisplayUnder18 = () => {
-    this.setState({
-      ...initialState,
-      displayUnder18: !this.state.displayUnder18
+      [event.target.id]: {display: true}
     })
   }
 
   render() {
-    const {displayPopulation, displayOver65, displayUnder18 } = this.state
+    const {population, over65, under18 } = this.state
     return (
       <div>
-        <button onClick={this.toggleDisplayPopulation}>Population</button>
-        <button onClick={this.toggleDisplayOver65}>Over65</button>
-        <button onClick={this.toggleDisplayUnder18}>Under18</button>
+        <button id="population"onClick={this.toggleFilter}>Population</button>
+        <button id="over65" onClick={this.toggleFilter}>Over65</button>
+        <button id="under18" onClick={this.toggleFilter}>Under18</button>
 
         <Map id="fixmap"
           style="mapbox://styles/mapbox/streets-v8"
@@ -164,9 +148,10 @@ export default class MapboxContainer extends Component {
           center={[-104.99, 39.74]}
           >
           {this.clearPolygons()}
-          {displayPopulation && this.populationPolygons()}
-          {displayOver65 && this.over65Polygons()}
-          {displayUnder18 && this.under18Polygons()}
+          {population.display && this.populationPolygons()}
+          {over65.display && this.over65Polygons()}
+          {under18.display && this.under18Polygons()}
+          { this.displaySchools()}
         </Map>
       </div>
 
