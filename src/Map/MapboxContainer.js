@@ -5,9 +5,7 @@ import MapMarker from './MapMarker';
 import NeighborhoodInfo from './NeighborhoodInfo'
 import PolygonContainer from './PolygonContainer'
 
-// const Map = ReactMapboxGl({
-//   accessToken: "pk.eyJ1Ijoia2FyaWZlcmVuY3p5IiwiYSI6ImNqd2t0cjllZjBxOHU0YXBjeHhncHVscWgifQ.f6ckouYcZFsUJwYDDRamyw"
-// })
+
 
 export default class MapboxContainer extends Component {
 
@@ -42,12 +40,11 @@ export default class MapboxContainer extends Component {
   render() {
     const {buttons, neighborhood } = this.state
     return (
-      <div>
-
+      <div id="mapbox-container">
         <Map
           style={"mapbox://styles/mapbox/streets-v8"}
           zoom={[11]}
-          center={[-104.99, 39.74]}
+          center={[-104.920999, 39.727388]}
           >
           <ScaleControl />
           <ZoomControl />

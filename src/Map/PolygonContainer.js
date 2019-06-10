@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import ReactMapboxGl, { Layer, Feature} from 'react-mapbox-gl';
 import Polygon from './Polygon'
+import Key from './Key'
 import neighborhoodCoords from './neighborhoodCoords'
+import { population_filter, over65_filter, under18_filter } from './Filters'
 
 export default class PolygonContainer extends Component {
 
@@ -28,24 +30,27 @@ export default class PolygonContainer extends Component {
     this.setState({ buttons })
   }
 
+  makeKey = (filter) => <Key filter={filter}/>
+
   colorPolygon = (mapNeighborhood, color, neighborhood) =>  <Polygon mapNeighborhood={mapNeighborhood} color={color} neighborhood={neighborhood} showInfo={this.showInfo} key={neighborhood.id}/>
 
   populationPolygons = () => neighborhoodCoords.map( mapNeighborhood => {
+    const { colors, limits } = population_filter
     let color = ""
     return this.props.neighborhoods.map ( neighborhood => {
       if (parseInt(mapNeighborhood.id) === neighborhood.id) {
         switch (true) {
-          case (neighborhood.POPULATION_2010 <= 5000):
-            color = "#edf8fb"
+          case (neighborhood.POPULATION_2010 <= limits[0]):
+            color = colors[0]
             break;
-          case (neighborhood.POPULATION_2010 <= 10000):
-            color = "#b3cde3"
+          case (neighborhood.POPULATION_2010 <= limits[1]):
+            color = colors[1]
             break;
-          case (neighborhood.POPULATION_2010 <= 15000):
-            color = "#8c96c6"
+          case (neighborhood.POPULATION_2010 <= limits[2]):
+            color = colors[2]
             break;
-          case (neighborhood.POPULATION_2010 > 15000):
-            color = "#88419d"
+          case (neighborhood.POPULATION_2010 > limits[2]):
+            color = colors[3]
             break;
           default:
             color = "#FFF"
@@ -57,18 +62,19 @@ export default class PolygonContainer extends Component {
   })
 
   over65Polygons = () => neighborhoodCoords.map( mapNeighborhood => {
+    const { colors, limits } = over65_filter
     let color = ""
     return this.props.neighborhoods.map ( neighborhood => {
       if (parseInt(mapNeighborhood.id) === neighborhood.id) {
         switch (true) {
-          case (neighborhood.PCT_65_PLUS <= 10):
-            color = "#b2e2e2"
+          case (neighborhood.PCT_65_PLUS <= limits[0]):
+            color = colors[0]
             break;
-          case (neighborhood.PCT_65_PLUS <= 20):
-            color = "#66c2a4"
+          case (neighborhood.PCT_65_PLUS <= limits[1]):
+            color = colors[1]
             break;
-          case (neighborhood.PCT_65_PLUS > 20):
-            color = "#238b45"
+          case (neighborhood.PCT_65_PLUS > limits[1]):
+            color = colors[2]
             break;
           default:
             color = "#FFF"
@@ -80,21 +86,23 @@ export default class PolygonContainer extends Component {
   })
 
   under18Polygons = () => neighborhoodCoords.map( mapNeighborhood => {
+    const { colors, ranges, limits } = under18_filter
+
     let color = ""
     return this.props.neighborhoods.map ( neighborhood => {
       if (parseInt(mapNeighborhood.id) === neighborhood.id) {
         switch (true) {
-          case (neighborhood.PCT_LESS_18 <= 10):
-            color = "#f0f9e8"
+          case (neighborhood.PCT_LESS_18 <= limits[0]):
+            color = colors[0]
             break;
-          case (neighborhood.PCT_LESS_18 <= 20):
-            color = "#bae4bc"
+          case (neighborhood.PCT_LESS_18 <= limits[1]):
+            color = colors[1]
             break;
-          case (neighborhood.PCT_LESS_18 <= 30):
-            color = "#7bccc4"
+          case (neighborhood.PCT_LESS_18 <= limits[2]):
+            color = colors[2]
             break;
-          case (neighborhood.PCT_LESS_18 > 30):
-            color = "#2b8cbe"
+          case (neighborhood.PCT_LESS_18 > limits[2]):
+            color = colors[3]
             break;
           default:
             color = "#FFF"
@@ -110,19 +118,25 @@ export default class PolygonContainer extends Component {
     return this.props.neighborhoods.map ( neighborhood => parseInt(mapNeighborhood.id) === neighborhood.id ? this.colorPolygon(mapNeighborhood, color, neighborhood) : null )
     })
 
-
   render() {
     const { noFilter, population, over65, under18 } = this.state.buttons
     return (
-      <div>
-      <button id="noFilter" className="filter-button" onClick={this.toggleFilter}>Clear Filters</button>
-      <button id="population" className="filter-button" onClick={this.toggleFilter}>Population</button>
-      <button id="over65" className="filter-button" onClick={this.toggleFilter}>Over65</button>
-      <button id="under18" className="filter-button" onClick={this.toggleFilter}>Under18</button>
-      { noFilter.display && this.clearPolygons() }
-      { population.display && this.populationPolygons() }
-      { over65.display && this.over65Polygons() }
-      { under18.display && this.under18Polygons() }
+      <div id="polygon-container">
+        <div id="button-container">
+          <button id="noFilter" className="filter-button" onClick={this.toggleFilter}>Clear Filters</button>
+          <button id="population" className="filter-button" onClick={this.toggleFilter}>{"Population"}</button>
+          <button id="over65" className="filter-button" onClick={this.toggleFilter}>Over65</button>
+          <button id="under18" className="filter-button" onClick={this.toggleFilter}>Under18</button>
+        </div>
+        { noFilter.display && this.clearPolygons() }
+        { population.display && this.populationPolygons() }
+        { over65.display && this.over65Polygons() }
+        { under18.display && this.under18Polygons() }
+        <div id="key-container">
+          { population.display && this.makeKey(population_filter) }
+          { over65.display && this.makeKey(over65_filter) }
+          { under18.display && this.makeKey(under18_filter) }
+        </div>
       </div>
     )
   }

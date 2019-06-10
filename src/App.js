@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import MapboxContainer from "./Map/MapboxContainer";
+import Header from "./Header/Header";
 
 const neighborhoodsURL = "http://localhost:3000/neighborhoods"
 const schoolsURL = "http://localhost:3000/schools"
@@ -28,17 +29,13 @@ class App extends React.Component {
     ))
     .then(data => this.setState({neighborhoods: data[0], schools: data[1]}))
   }
-    // fetch(URLbase)
-    // .then(resp => resp.json())
-    // .then(neighborhoods => this.setState({ neighborhoods }))
-
-
 
 
   render(){
     return(
       <div className="App">
-        <MapboxContainer neighborhoods={this.state.neighborhoods} schools={this.state.schools}/>
+        <Header id="App-header"/>
+        <MapboxContainer id="mapbox-container" neighborhoods={this.state.neighborhoods} schools={this.state.schools}/>
       </div >
     )
   }

@@ -12,7 +12,7 @@ export default class Polygon extends Component {
               type="fill"
               paint={{
                 'fill-color': `${color}`,
-                'fill-opacity': 0.7,
+                'fill-opacity': 0.8,
                 'fill-outline-color': "#FFF"
               }}
         >
