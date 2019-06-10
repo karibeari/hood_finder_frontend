@@ -2,3 +2,27 @@
   max-width: 5%;
   height: auto;
 }
+
+.filter-button {
+background-color: rgb(249, 249, 249);
+opacity: 0.95;
+transition: background-color 0.16s ease-out 0s;
+cursor: pointer;
+border-width: 0px 0px 1px;
+border-top-style: initial;
+border-right-style: initial;
+border-bottom-style: solid;
+border-left-style: initial;
+border-top-color: initial;
+border-right-color: initial;
+border-bottom-color: rgba(0, 0, 0, 0.1);
+border-left-color: initial;
+border-image: initial;
+height: 26px;
+width: 26px;
+/* background-position: 0px 0px;
+background-size: 26px 260px;
+outline: 0px; */
+border-top-left-radius: 20px;
+border-top-right-radius: 20px;
+}
