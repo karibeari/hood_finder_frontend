@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import { Marker } from 'react-mapbox-gl'
-import './Map.css'
 
 export default class MapMarker extends Component {
   constructor () {
     super()
     this.state={}
   }
-
 
   render() {
     const { latitude, longitude } = this.props.school

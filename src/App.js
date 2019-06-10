@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import MapboxContainer from "./Map/MapboxContainer";
 import Header from "./Header/Header";
+import CustomFilters from "./CustomFilters/CustomFiltersContainer";
 
 const neighborhoodsURL = "http://localhost:3000/neighborhoods"
 const schoolsURL = "http://localhost:3000/schools"
@@ -35,7 +36,8 @@ class App extends React.Component {
     return(
       <div className="App">
         <Header id="App-header"/>
-        <MapboxContainer id="mapbox-container" neighborhoods={this.state.neighborhoods} schools={this.state.schools}/>
+        <CustomFilters id="custom-filters-container"/>
+        <MapboxContainer neighborhoods={this.state.neighborhoods} schools={this.state.schools}/>
       </div >
     )
   }

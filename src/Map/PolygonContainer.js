@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactMapboxGl, { Layer, Feature} from 'react-mapbox-gl';
 import Polygon from './Polygon'
 import Key from './Key'
 import neighborhoodCoords from './neighborhoodCoords'
@@ -86,7 +85,7 @@ export default class PolygonContainer extends Component {
   })
 
   under18Polygons = () => neighborhoodCoords.map( mapNeighborhood => {
-    const { colors, ranges, limits } = under18_filter
+    const { colors, limits } = under18_filter
 
     let color = ""
     return this.props.neighborhoods.map ( neighborhood => {
@@ -123,7 +122,7 @@ export default class PolygonContainer extends Component {
     return (
       <div id="polygon-container">
         <div id="button-container">
-          <button id="noFilter" className="filter-button" onClick={this.toggleFilter}>Clear Filters</button>
+          <button id="noFilter" className="filter-button" onClick={this.toggleFilter}>Clear Map Filters</button>
           <button id="population" className="filter-button" onClick={this.toggleFilter}>{"Population"}</button>
           <button id="over65" className="filter-button" onClick={this.toggleFilter}>Over65</button>
           <button id="under18" className="filter-button" onClick={this.toggleFilter}>Under18</button>
