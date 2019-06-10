@@ -1,53 +1,64 @@
 import React, { Component } from "react";
-import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature, Popup, ScaleControl, ZoomControl } from 'react-mapbox-gl';
 import MapMarker from './MapMarker';
 import neighborhoodCoords from './neighborhoodCoords'
-
+import NeighborhoodInfo from './NeighborhoodInfo'
+import Polygon from './Polygon'
 
 const Map = ReactMapboxGl({
   accessToken: ""
 });
 
-const initialState = {
-  population: {display: false},
-  over65: {display: false},
-  under18: {display: false}
-}
-
 export default class MapboxContainer extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { ...initialState }
+    this.state = {
+      buttons: {
+        noFilter: {display: true},
+        population: {display: false},
+        over65: {display: false},
+        under18: {display: false}
+      },
+      neighborhood: null
   }
+}
 
+  // displaySchools = () => {
+  //   const schools = this.props.schools || []
+  //   return schools.map(school => {
+  //     return <MapMarker school={school} key={school.id}/>
+  //   })
+  // }
 
+  showInfo = (neighborhood) => {this.setState({ neighborhood })}
+  hideInfo = () => {this.setState({ neighborhood: null })}
 
-  displaySchools = () => {
-    const schools = this.props.schools || []
-    console.log(this.props.schools)
-    return schools.map(school => {
-      return <MapMarker school={school} />
-    })
-    // console.log(this.props.schools)
-  }
+  onToggleHover = (cursor: string, { map }: { map: any }) => {map.getCanvas().style.cursor = cursor}
 
+  // colorPolygon = (mapNeighborhood, color, neighborhood) => {
+  //   return <Layer key={neighborhood.id}
+  //                 type="fill"
+  //                 paint={{
+  //                   'fill-color': `${color}`,
+  //                   'fill-opacity': 0.7,
+  //                   'fill-outline-color': "#000"
+  //                 }}
+  //         >
+  //             <Feature
+  //               coordinates={ [mapNeighborhood.coordinates] }
+  //               onClick={ () => this.showInfo(neighborhood)}
+  //               onMouseEnter={this.onToggleHover.bind(this, 'pointer')}
+  //               onMouseLeave={this.onToggleHover.bind(this, '')}/>
+  //         </Layer>
+  //
+  //       }
 
-  colorPolygon = (neighborhood, color) => {
-    return <Layer key={neighborhood.id}
-                  type="fill"
-                  paint={{
-                    'fill-color': `${color}`,
-                    'fill-opacity': 0.7,
-                    'fill-outline-color': "#000"
-                  }}>
-              <Feature coordinates={ [neighborhood.coordinates] } />
-          </Layer>
-    }
+  colorPolygon = (mapNeighborhood, color, neighborhood) =>  <Polygon mapNeighborhood={mapNeighborhood} color={color} neighborhood={neighborhood} showInfo={this.showInfo} key={neighborhood.id}/>
 
   populationPolygons = () => neighborhoodCoords.map( mapNeighborhood => {
     let color = ""
-    this.props.neighborhoods.map ( neighborhood => {
+    return this.props.neighborhoods.map ( neighborhood => {
       if (parseInt(mapNeighborhood.id) === neighborhood.id) {
         switch (true) {
           case (neighborhood.POPULATION_2010 <= 5000):
@@ -66,16 +77,16 @@ export default class MapboxContainer extends Component {
             color = "#FFF"
             break;
         }
+        this.colorPolygon(mapNeighborhood, color, neighborhood)
       }
     })
-    return this.colorPolygon(mapNeighborhood, color)
+    // return this.colorPolygon(mapNeighborhood, color)
   })
 
   over65Polygons = () => neighborhoodCoords.map( mapNeighborhood => {
     let color = ""
-    this.props.neighborhoods.map ( neighborhood => {
+    return this.props.neighborhoods.map ( neighborhood => {
       if (parseInt(mapNeighborhood.id) === neighborhood.id) {
-
         switch (true) {
           case (neighborhood.PCT_65_PLUS <= 10):
             color = "#b2e2e2"
@@ -90,16 +101,15 @@ export default class MapboxContainer extends Component {
             color = "#FFF"
             break;
         }
+        this.colorPolygon(mapNeighborhood, color, neighborhood)
       }
     })
-    return this.colorPolygon(mapNeighborhood, color)
   })
 
   under18Polygons = () => neighborhoodCoords.map( mapNeighborhood => {
     let color = ""
-    this.props.neighborhoods.map ( neighborhood => {
+    return this.props.neighborhoods.map ( neighborhood => {
       if (parseInt(mapNeighborhood.id) === neighborhood.id) {
-
         switch (true) {
           case (neighborhood.PCT_LESS_18 <= 10):
             color = "#f0f9e8"
@@ -117,41 +127,53 @@ export default class MapboxContainer extends Component {
             color = "#FFF"
             break;
         }
+        // console.log(mapNeighborhood, color, neighborhood)
+        this.colorPolygon(mapNeighborhood, color, neighborhood)
       }
+
+
     })
-    return this.colorPolygon(mapNeighborhood, color)
+
   })
 
   clearPolygons = () => neighborhoodCoords.map( mapNeighborhood => {
     let color = "#000"
-    return this.colorPolygon(mapNeighborhood, color)
-  })
-
-  toggleFilter = (event) => {
-    this.setState({
-      ...initialState,
-      [event.target.id]: {display: true}
+    return this.props.neighborhoods.map ( neighborhood => parseInt(mapNeighborhood.id) === neighborhood.id ? this.colorPolygon(mapNeighborhood, color, neighborhood) : null )
     })
-  }
+
+  // toggleFilter = (event) => {
+  //   const buttons = {
+  //     population: {display: false},
+  //     over65: {display: false},
+  //     under18: {display: false}
+  //   }
+  //   buttons[event.target.id].display = true
+  //   this.setState({ buttons })
+  // }
 
   render() {
-    const {population, over65, under18 } = this.state
+    const {buttons, neighborhood } = this.state
     return (
       <div>
-        <button id="population"onClick={this.toggleFilter}>Population</button>
+        <button id="noFilter" onClick={this.toggleFilter}>Display Neighborhoods</button>
+        <button id="population" onClick={this.toggleFilter}>Population</button>
         <button id="over65" onClick={this.toggleFilter}>Over65</button>
         <button id="under18" onClick={this.toggleFilter}>Under18</button>
-
-        <Map id="fixmap"
-          style="mapbox://styles/mapbox/streets-v8"
+        <Map
+          style={"mapbox://styles/mapbox/streets-v8"}
           zoom={[11]}
           center={[-104.99, 39.74]}
           >
-          {this.clearPolygons()}
-          {population.display && this.populationPolygons()}
-          {over65.display && this.over65Polygons()}
-          {under18.display && this.under18Polygons()}
-          { this.displaySchools()}
+          <ScaleControl />
+          <ZoomControl />
+          {console.log(this.state === initialState)}
+          {console.log(this.state )}
+          {console.log(initialState)}
+          { buttons.noFilter.display && this.clearPolygons() }
+          { buttons.population.display && this.populationPolygons() }
+          { buttons.over65.display && this.over65Polygons() }
+          { buttons.under18.display && this.under18Polygons() }
+          { neighborhood !== null && <NeighborhoodInfo neighborhood={this.state.neighborhood} hideAlert={this.hideInfo}/> }
         </Map>
       </div>
 

@@ -7,21 +7,16 @@ export default class MapMarker extends Component {
     super()
     this.state={}
   }
-// const { id, name, url, latitude, longitude, level, current_rank, last_year_rank } = this.props.school
 
 
   render() {
-    const { id, name, url, latitude, longitude, level, current_rank, last_year_rank } = this.props.school
+    const { latitude, longitude } = this.props.school
     return(
-    <div>
-      {console.log('working', this.props.school)}
-      </div>
+      <Marker
+        coordinates={[`${longitude}`, `${latitude}`]}
+        anchor="bottom">
+        <img className="school-marker" src="https://cdn3.iconfinder.com/data/icons/map-markers-1/512/education-512.png" alt=""/>
+      </Marker>
     )
   }
 }
-
-// <Marker
-//   coordinates={[latitude, longitude]}
-//   anchor="bottom">
-//   <img className="school-marker" src="https://cdn3.iconfinder.com/data/icons/map-markers-1/512/education-512.png"/>
-// </Marker>
