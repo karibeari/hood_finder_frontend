@@ -6,8 +6,7 @@ import NeighborhoodInfo from './NeighborhoodInfo'
 import Polygon from './Polygon'
 
 const Map = ReactMapboxGl({
-  accessToken: ""
-});
+})
 
 export default class MapboxContainer extends Component {
 
@@ -77,10 +76,9 @@ export default class MapboxContainer extends Component {
             color = "#FFF"
             break;
         }
-        this.colorPolygon(mapNeighborhood, color, neighborhood)
+        return this.colorPolygon(mapNeighborhood, color, neighborhood)
       }
     })
-    // return this.colorPolygon(mapNeighborhood, color)
   })
 
   over65Polygons = () => neighborhoodCoords.map( mapNeighborhood => {
@@ -101,7 +99,7 @@ export default class MapboxContainer extends Component {
             color = "#FFF"
             break;
         }
-        this.colorPolygon(mapNeighborhood, color, neighborhood)
+        return this.colorPolygon(mapNeighborhood, color, neighborhood)
       }
     })
   })
@@ -127,35 +125,33 @@ export default class MapboxContainer extends Component {
             color = "#FFF"
             break;
         }
-        // console.log(mapNeighborhood, color, neighborhood)
-        this.colorPolygon(mapNeighborhood, color, neighborhood)
+        return this.colorPolygon(mapNeighborhood, color, neighborhood)
       }
-
-
     })
-
   })
+
 
   clearPolygons = () => neighborhoodCoords.map( mapNeighborhood => {
     let color = "#000"
     return this.props.neighborhoods.map ( neighborhood => parseInt(mapNeighborhood.id) === neighborhood.id ? this.colorPolygon(mapNeighborhood, color, neighborhood) : null )
     })
 
-  // toggleFilter = (event) => {
-  //   const buttons = {
-  //     population: {display: false},
-  //     over65: {display: false},
-  //     under18: {display: false}
-  //   }
-  //   buttons[event.target.id].display = true
-  //   this.setState({ buttons })
-  // }
+  toggleFilter = (event) => {
+    const buttons ={
+      noFilter: {display: false},
+      population: {display: false},
+      over65: {display: false},
+      under18: {display: false}
+    }
+    buttons[event.target.id].display = true
+    this.setState({ buttons })
+  }
 
   render() {
     const {buttons, neighborhood } = this.state
     return (
       <div>
-        <button id="noFilter" onClick={this.toggleFilter}>Display Neighborhoods</button>
+        <button id="noFilter" onClick={this.toggleFilter}>Clear Filters</button>
         <button id="population" onClick={this.toggleFilter}>Population</button>
         <button id="over65" onClick={this.toggleFilter}>Over65</button>
         <button id="under18" onClick={this.toggleFilter}>Under18</button>
@@ -166,9 +162,6 @@ export default class MapboxContainer extends Component {
           >
           <ScaleControl />
           <ZoomControl />
-          {console.log(this.state === initialState)}
-          {console.log(this.state )}
-          {console.log(initialState)}
           { buttons.noFilter.display && this.clearPolygons() }
           { buttons.population.display && this.populationPolygons() }
           { buttons.over65.display && this.over65Polygons() }
@@ -176,7 +169,6 @@ export default class MapboxContainer extends Component {
           { neighborhood !== null && <NeighborhoodInfo neighborhood={this.state.neighborhood} hideAlert={this.hideInfo}/> }
         </Map>
       </div>
-
-    );
+    )
   }
 }
