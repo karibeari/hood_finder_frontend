@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Polygon from './Polygon'
 import Key from './Key'
 import neighborhoodCoords from './neighborhoodCoords'
-import { population_filter, over65_filter, under18_filter } from './Filters'
+import { population_filter, over65_filter, under18_filter } from '../Filters'
 
 export default class PolygonContainer extends Component {
 

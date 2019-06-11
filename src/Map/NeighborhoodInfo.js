@@ -16,7 +16,6 @@ class NeighborhoodInfo extends Component {
       </div>
     )
   }
-
 }
 
 export default NeighborhoodInfo
