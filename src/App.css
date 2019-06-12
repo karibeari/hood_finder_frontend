@@ -4,6 +4,7 @@
   width: auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 20%;
 }
 
 .mapboxgl-map {
@@ -25,4 +26,30 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+button {
+  opacity: 0.95;
+	box-shadow:inset 0px 0px 11px -31px #bee2f9;
+	background-color:#63b8ee;
+	border-radius:10px;
+	border:2px solid #3866a3;
+	display:inline-block;
+	cursor:pointer;
+	color:#14396a;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:12px 24px;
+  margin: 3%;
+	text-decoration:none;
+	text-shadow:0px 0px 0px #7cacde;
+}
+button:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #468ccf), color-stop(1, #63b8ee));
+	background-color:#468ccf;
+}
+button:active {
+	position:relative;
+	top:1px;
 }

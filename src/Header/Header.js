@@ -1,10 +1,12 @@
 import React from 'react'
 import './Header.css'
+import LogoutButton from "./LogoutButton";
 
-const Header = () => {
+const Header = (props) => {
   return(
     <header className="App-header">
-      <h1>Title</h1>
+      <h1 id="title">Title</h1>
+      <LogoutButton logout={props.logout} />
     </header>
   )
 }

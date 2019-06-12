@@ -3,11 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import MapboxContainer from "./Map/MapboxContainer";
-import Header from "./Header/Header";
-import CustomFilters from "./CustomFilters/CustomFiltersContainer";
-import Login from "./Login";
-import Home from "./Home";
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
