@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Polygon from './Polygon'
 import Key from './Key'
+import CustomFilterKey from './CustomFilterKey'
 import neighborhoodCoords from './neighborhoodCoords'
-import { population_filter, over65_filter, under18_filter } from '../Filters'
+import { population_filter, over65_filter, under18_filter, custom_filter } from '../Filters'
 
 export default class PolygonContainer extends Component {
 
@@ -32,6 +33,52 @@ export default class PolygonContainer extends Component {
   makeKey = (filter) => <Key filter={filter}/>
 
   colorPolygon = (mapNeighborhood, color, neighborhood) =>  <Polygon mapNeighborhood={mapNeighborhood} color={color} neighborhood={neighborhood} showInfo={this.showInfo} key={neighborhood.id}/>
+
+  customFilterPolygons = () => neighborhoodCoords.map( mapNeighborhood => {
+    const { colors, limits } = custom_filter
+    let color = ""
+    return this.props.neighborhoods.map ( neighborhood => {
+      if (parseInt(mapNeighborhood.id) === neighborhood.id) {
+        switch (true) {
+          case (neighborhood.match_score <= limits[0]):
+            color = colors[0]
+            break;
+          case (neighborhood.match_score <= limits[1]):
+            color = colors[1]
+            break;
+          case (neighborhood.match_score <= limits[2]):
+            color = colors[2]
+            break;
+          case (neighborhood.match_score <= limits[3]):
+            color = colors[3]
+            break;
+          case (neighborhood.match_score <= limits[4]):
+            color = colors[4]
+            break;
+          case (neighborhood.match_score <= limits[5]):
+            color = colors[5]
+            break;
+          case (neighborhood.match_score <= limits[6]):
+            color = colors[6]
+            break;
+          case (neighborhood.match_score <= limits[7]):
+            color = colors[7]
+            break;
+          case (neighborhood.match_score <= limits[8]):
+            color = colors[8]
+            break;
+          case (neighborhood.match_score > limits[8]):
+            color = colors[9]
+            break;
+          default:
+            color = "#FFF"
+            break;
+        }
+        console.log(neighborhood.match_score, color)
+        return this.colorPolygon(mapNeighborhood, color, neighborhood)
+      }
+    })
+  })
 
   populationPolygons = () => neighborhoodCoords.map( mapNeighborhood => {
     const { colors, limits } = population_filter
@@ -86,7 +133,6 @@ export default class PolygonContainer extends Component {
 
   under18Polygons = () => neighborhoodCoords.map( mapNeighborhood => {
     const { colors, limits } = under18_filter
-
     let color = ""
     return this.props.neighborhoods.map ( neighborhood => {
       if (parseInt(mapNeighborhood.id) === neighborhood.id) {
@@ -127,14 +173,16 @@ export default class PolygonContainer extends Component {
           <button id="over65" className="filter-button" onClick={this.toggleFilter}>Over65</button>
           <button id="under18" className="filter-button" onClick={this.toggleFilter}>Under18</button>
         </div>
-        { noFilter.display && this.clearPolygons() }
-        { population.display && this.populationPolygons() }
-        { over65.display && this.over65Polygons() }
-        { under18.display && this.under18Polygons() }
+          { noFilter.display && this.clearPolygons() }
+          { population.display && this.populationPolygons() }
+          { over65.display && this.over65Polygons() }
+          { under18.display && this.under18Polygons() }
+          { this.props.customFilterView.display && this.customFilterPolygons() }
         <div id="key-container">
           { population.display && this.makeKey(population_filter) }
           { over65.display && this.makeKey(over65_filter) }
           { under18.display && this.makeKey(under18_filter) }
+          { this.props.customFilterView.display && <CustomFilterKey /> }
         </div>
       </div>
     )

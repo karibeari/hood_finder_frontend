@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import ReactMapboxGl, {  ZoomControl } from 'react-mapbox-gl';
 // import MapMarker from './MapMarker';
 import './Map.css'
-
-import NeighborhoodInfo from './NeighborhoodInfo'
 import PolygonContainer from './PolygonContainer'
 
 const Map = ReactMapboxGl({
-  accessToken: "pk..f6ckouYcZFsUJwYDDRamyw"
+  accessToken: "pk.eyJ1Ijoia2Fy.f6ckouYcZFsUJwYDDRamyw"
 })
 
 export default class MapboxContainer extends Component {
@@ -38,8 +36,7 @@ export default class MapboxContainer extends Component {
           >
           {this.displaySchools}
           <ZoomControl />
-          <PolygonContainer neighborhoods={this.props.neighborhoods}/>
-          { neighborhood !== null && <NeighborhoodInfo neighborhood={this.state.neighborhood} hideAlert={this.hideInfo}/> }
+          <PolygonContainer neighborhoods={ this.props.neighborhoods } customFilterView={ this.props.customFilterView }/>
         </Map>
       </div>
     )

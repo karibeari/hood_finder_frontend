@@ -52,6 +52,19 @@
   cursor: pointer;
 }
 
+#color-chips {
+  display: inline-block;
+  margin-left: 15%;
+}
+
+.color-value {
+  float: left;
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(0, 0, 0, .2);
+
+}
+
 .key-box {
   float: left;
   width: 10px;
