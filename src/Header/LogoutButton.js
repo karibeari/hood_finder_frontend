@@ -4,7 +4,7 @@ import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 const LogoutButton = (props) => {
   return(
-    <button onClick={props.logout} id="logout-button"><FontAwesomeIcon icon={faSignOutAlt} /> Sign Out</button>
+    <button className="app-button" onClick={props.logout} id="logout-button"><FontAwesomeIcon icon={faSignOutAlt} /> Sign Out</button>
   )
 }
 

@@ -28,7 +28,7 @@
   }
 }
 
-button {
+.app-button {
   opacity: 0.95;
 	box-shadow:inset 0px 0px 11px -31px #bee2f9;
 	background-color:#63b8ee;
@@ -45,11 +45,11 @@ button {
 	text-decoration:none;
 	text-shadow:0px 0px 0px #7cacde;
 }
-button:hover {
+.app-button:hover {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #468ccf), color-stop(1, #63b8ee));
 	background-color:#468ccf;
 }
-button:active {
+.app-button:active {
 	position:relative;
 	top:1px;
 }

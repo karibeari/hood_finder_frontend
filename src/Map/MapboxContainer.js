@@ -5,7 +5,7 @@ import './Map.css'
 import PolygonContainer from './PolygonContainer'
 
 const Map = ReactMapboxGl({
-  accessToken: "pk.eyJ1Ijoia2Fy.f6ckouYcZFsUJwYDDRamyw"
+  accessToken: "pk.eyJ1Ijoia2FyaWZlcmVuY3p5IiwiYSI6ImNqd2t0cjllZjBxOHU0YXBjeHhncHVscWgifQ.f6ckouYcZFsUJwYDDRamyw"
 })
 
 export default class MapboxContainer extends Component {
@@ -24,9 +24,12 @@ export default class MapboxContainer extends Component {
   //   })
   // }
 
+  onToggleHover(cursor: string, { map }: { map: any }) {
+    map.getCanvas().style.cursor = cursor;
+  }
 
   render() {
-    const { neighborhood } = this.state
+    // const { neighborhood } = this.state
     return (
       <div id="mapbox-container">
         <Map

@@ -7,7 +7,7 @@ export default class Polygon extends Component {
   onToggleHover = (cursor: string, { map }: { map: any }) => {map.getCanvas().style.cursor = cursor}
 
   render() {
-    const { mapNeighborhood, color, neighborhood } = this.props
+    let { mapNeighborhood, color, neighborhood } = this.props
 
     return (
         <Layer key={neighborhood.id}
@@ -36,7 +36,10 @@ export default class Polygon extends Component {
                 <p>Two or More Races: ${neighborhood.PCT_TWO_OR_MORE_RACES}%</p>
                 `
               })}
-
+              onMouseEnter={ () => {
+                color = "#FFF"
+                console.log(color)
+              }}
             />
         </Layer>
     )

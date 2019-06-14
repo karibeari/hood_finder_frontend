@@ -9,7 +9,7 @@ const FindMatchButton = props => {
   }
 
   return(
-    <button onClick={ handleClick }>Find Matching Neighborhood</button>
+    <button className="app-button" onClick={ handleClick }>Find Matching Neighborhood</button>
   )
 }
 

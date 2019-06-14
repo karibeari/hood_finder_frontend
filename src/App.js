@@ -1,17 +1,17 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+// import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import MapboxContainer from "./Map/MapboxContainer";
 import Header from "./Header/Header";
 import CustomFiltersContainer from "./CustomFilters/CustomFiltersContainer";
-import Login from "./Login/Login";
-import _ from 'lodash'
-import Swal from 'sweetalert2'
+// import Login from "./Login/Login";
+// import _ from 'lodash'
+// import Swal from 'sweetalert2'
 
-const authenticateURL = "http://localhost:3000/authenticate"
+// const authenticateURL = "http://localhost:3000/authenticate"
 const neighborhoodsURL = "http://localhost:3000/neighborhoods"
 const schoolsURL = "http://localhost:3000/schools"
-const usersURL = "http://localhost:3000/users"
+// const usersURL = "http://localhost:3000/users"
 
 const urls = [neighborhoodsURL, schoolsURL]
 
@@ -28,11 +28,11 @@ class App extends React.Component {
           range: { min: 1, max: 20000 }
         },
         percent_over_65: {
-          priority: 1,
+          priority: 2,
           range: { min: 1, max: 100 }
         },
         percent_under_18: {
-          priority: 1,
+          priority: 3,
           range: { min: 1, max: 100 }
         }
       },
@@ -43,6 +43,14 @@ class App extends React.Component {
     }
   }
 
+  setPriority = (filters) => {
+    let customFilters = {}
+    filters.map((filter, index) => {
+      const newFilter = {[filter.id]: {...this.state.customFilters[filter.id], priority: index+1 }}
+      Object.assign(customFilters, newFilter)
+    })
+    this.setState({ customFilters })
+  }
 
   customNeighborhoods = () => {
 
@@ -141,7 +149,7 @@ class App extends React.Component {
       <div className="App">
         <Header logout={ this.logout } />
         <MapboxContainer neighborhoods={ this.state.neighborhoods} schools={ this.state.schools } customFilterView={ this.state.customFilterView } />
-        <CustomFiltersContainer setCustomFilters={ this.setCustomFilters } customFilters={ this.state.customFilters } showCustomFilterView={ this.showCustomFilterView } customNeighborhoods={ this.customNeighborhoods }/>
+        <CustomFiltersContainer setCustomFilters={ this.setCustomFilters } customFilters={ this.state.customFilters } showCustomFilterView={ this.showCustomFilterView } customNeighborhoods={ this.customNeighborhoods } setPriority={ this.setPriority }/>
       </div >
     )
   }
