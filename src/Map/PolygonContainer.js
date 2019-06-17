@@ -74,7 +74,7 @@ export default class PolygonContainer extends Component {
             color = "#FFF"
             break;
         }
-        console.log(neighborhood.match_score, color)
+        // console.log(neighborhood.match_score, color)
         return this.colorPolygon(mapNeighborhood, color, neighborhood)
       }
     })

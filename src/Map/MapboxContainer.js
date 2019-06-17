@@ -5,7 +5,7 @@ import './Map.css'
 import PolygonContainer from './PolygonContainer'
 
 const Map = ReactMapboxGl({
-  accessToken: "pk.eyJ1Ijoia2FyaWZlcmVuY3p5IiwiYSI6ImNqd2t0cjllZjBxOHU0YXBjeHhncHVscWgifQ.f6ckouYcZFsUJwYDDRamyw"
+  accessToken: "pk.eyJ1Ijoia2FyaWZlcXBjeHhncHVscWgifQ.f6ckouYcZFsUJwYDDRamyw"
 })
 
 export default class MapboxContainer extends Component {

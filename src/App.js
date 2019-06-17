@@ -5,7 +5,7 @@ import MapboxContainer from "./Map/MapboxContainer";
 import Header from "./Header/Header";
 import CustomFiltersContainer from "./CustomFilters/CustomFiltersContainer";
 // import Login from "./Login/Login";
-// import _ from 'lodash'
+import _ from 'lodash'
 // import Swal from 'sweetalert2'
 
 // const authenticateURL = "http://localhost:3000/authenticate"
@@ -25,15 +25,15 @@ class App extends React.Component {
       customFilters: {
         population: {
           priority: 1,
-          range: { min: 1, max: 20000 }
+          range: { min: 0, max: 35000000 }
         },
         percent_over_65: {
           priority: 2,
-          range: { min: 1, max: 100 }
+          range: { min: 0, max: 100 }
         },
         percent_under_18: {
           priority: 3,
-          range: { min: 1, max: 100 }
+          range: { min: 0, max: 100 }
         }
       },
       favorites: [],
@@ -43,16 +43,27 @@ class App extends React.Component {
     }
   }
 
+  factorialize = num => {
+    let result = 1
+    while (num > 0) {
+      result = result * num
+      num -=1
+    }
+    return result
+  }
+
   setPriority = (filters) => {
     let customFilters = {}
     filters.map((filter, index) => {
-      const newFilter = {[filter.id]: {...this.state.customFilters[filter.id], priority: index+1 }}
+      const newFilter = {[filter.id]: {...this.state.customFilters[filter.id], priority: index + 1 }}
       Object.assign(customFilters, newFilter)
     })
     this.setState({ customFilters })
   }
 
-  customNeighborhoods = () => {
+  getNeighborhoodMatches = () => {
+    let num_of_filters = _.keys(this.state.customFilters).length
+    let potential_score = this.factorialize(num_of_filters)
 
     let neighborhoods = this.state.neighborhoods.map((neighborhood, index) => {
       let match_score = 0
@@ -60,59 +71,29 @@ class App extends React.Component {
       let { range, priority } = this.state.customFilters.population
       let { min, max } = range
       if (neighborhood.POPULATION_2010 > min && neighborhood.POPULATION_2010 < max) {
-        match_score = priority * 10
-        console.log(neighborhood.NBRHD_NAME, match_score)
+        match_score = num_of_filters + 1 - priority
       }
+
       priority = this.state.customFilters.percent_under_18.priority
       min = this.state.customFilters.percent_under_18.range.min
       max = this.state.customFilters.percent_under_18.range.max
       if (neighborhood.PCT_LESS_18 > min && neighborhood.PCT_LESS_18 < max) {
-        match_score = match_score += (priority * 10)
-        console.log(neighborhood.NBRHD_NAME, match_score)
+        match_score += num_of_filters + 1 - priority
       }
+
       priority = this.state.customFilters.percent_over_65.priority
       min = this.state.customFilters.percent_over_65.range.min
       max = this.state.customFilters.percent_over_65.range.max
-      if (neighborhood.PCT_OVER_65 > min && neighborhood.PCT_OVER_65 < max) {
-        match_score = match_score += (priority * 10)
-        console.log(neighborhood.NBRHD_NAME, match_score)
+      if (neighborhood.PCT_65_PLUS > min && neighborhood.PCT_65_PLUS < max) {
+        match_score += (num_of_filters + 1 - priority)
       }
-      this.state.neighborhoods[index].match_score = match_score/3
+      match_score = match_score/potential_score * 100
+      neighborhood.match_score = match_score
+      console.log( neighborhood.NBRHD_NAME, match_score )
       return neighborhood
     })
     this.setState({ neighborhoods })
   }
-
-  // matchNeighborhoodPercentUnder18 = () => {
-  //   const { range, priority } = this.state.customFilters.percent_under_18
-  //   const { min, max } = range
-  //
-  //   let neighborhoods = this.state.neighborhoods.map((neighborhood, index) => {
-  //     let match_score = 0
-  //     if (neighborhood.PCT_LESS_18 > min && neighborhood.PCT_LESS_18) {
-  //       match_score = priority * 10
-  //     }
-  //     this.state.neighborhoods[index].match_score = match_score
-  //     return neighborhood
-  //   })
-  //   this.setState({ neighborhoods })
-  // }
-  //
-  // matchNeighborhoodPercentOver65 = () => {
-  //   const { range, priority } = this.state.customFilters.percent_over65
-  //   const { min, max } = range
-  //
-  //   let neighborhoods = this.state.neighborhoods.map((neighborhood, index) => {
-  //     let match_score = 0
-  //     if (neighborhood.PCT_OVER_65 > min && neighborhood.PCT_OVER_65) {
-  //       match_score = priority * 10
-  //     }
-  //     this.state.neighborhoods[index].match_score = match_score
-  //     return neighborhood
-  //   })
-  //   this.setState({ neighborhoods })
-  // }
-
 
 
   // getData = () => {
@@ -136,7 +117,9 @@ class App extends React.Component {
     .then(data => this.setState({neighborhoods: data[0], schools: data[1]}))
   }
 
-  setCustomFilters = (name, filters) => {
+//sets state with user adjusted filters
+  setCustomFilters = (name, range) => {
+    const filters = { ...this.state.customFilters[name], range: range }
     this.setState({ customFilters: { ...this.state.customFilters, [name]: filters } })
   }
 
@@ -148,8 +131,16 @@ class App extends React.Component {
     return(
       <div className="App">
         <Header logout={ this.logout } />
-        <MapboxContainer neighborhoods={ this.state.neighborhoods} schools={ this.state.schools } customFilterView={ this.state.customFilterView } />
-        <CustomFiltersContainer setCustomFilters={ this.setCustomFilters } customFilters={ this.state.customFilters } showCustomFilterView={ this.showCustomFilterView } customNeighborhoods={ this.customNeighborhoods } setPriority={ this.setPriority }/>
+        <MapboxContainer
+          neighborhoods={ this.state.neighborhoods}
+          schools={ this.state.schools }
+          customFilterView={ this.state.customFilterView } />
+        <CustomFiltersContainer
+          setCustomFilters={ this.setCustomFilters }
+          customFilters={ this.state.customFilters }
+          showCustomFilterView={ this.showCustomFilterView }
+          getNeighborhoodMatches={ this.getNeighborhoodMatches }
+          setPriority={ this.setPriority }/>
       </div >
     )
   }

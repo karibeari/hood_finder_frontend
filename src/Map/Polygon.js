@@ -38,7 +38,6 @@ export default class Polygon extends Component {
               })}
               onMouseEnter={ () => {
                 color = "#FFF"
-                console.log(color)
               }}
             />
         </Layer>

@@ -4,7 +4,7 @@ import './CustomFilters.css'
 const FindMatchButton = props => {
 
   const handleClick = () => {
-    props.customNeighborhoods()
+    props.getNeighborhoodMatches()
     props.showCustomFilterView()
   }
 
