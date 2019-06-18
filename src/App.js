@@ -78,6 +78,7 @@ class App extends React.Component {
         if (neighborhood.POPULATION_2010 >= min && neighborhood.POPULATION_2010 <= max) {
           match_score = num_of_filters + 1 - priority
         }
+        console.log('pop', match_score)
       })
 
       priority = this.state.customFilters.percent_under_18.priority
@@ -87,6 +88,7 @@ class App extends React.Component {
         if (Math.round(neighborhood.PCT_LESS_18) >= min && Math.round(neighborhood.PCT_LESS_18) <= max) {
           match_score += num_of_filters + 1 - priority
         }
+        console.log('18', match_score)
       })
 
       priority = this.state.customFilters.percent_over_65.priority
@@ -96,6 +98,7 @@ class App extends React.Component {
         if (Math.round(neighborhood.PCT_65_PLUS) >= min && Math.round(neighborhood.PCT_65_PLUS) <= max) {
           match_score += num_of_filters + 1 - priority
         }
+        console.log('65', match_score)
       })
 
       priority = this.state.customFilters.median_home_value.priority
@@ -105,10 +108,13 @@ class App extends React.Component {
         if (neighborhood.zestimate >= min && neighborhood.zestimate <= max) {
           match_score += num_of_filters + 1 - priority
         }
+        console.log('hv', match_score)
       })
 
       match_score = match_score/potential_score * 100
+
       neighborhood.match_score = match_score
+      console.log( neighborhood.NBRHD_NAME, match_score )
       return neighborhood
     })
     this.setState({ neighborhoods })
@@ -144,6 +150,13 @@ class App extends React.Component {
     this.setState({ customFilters })
   }
 
+  clearCustomFilters = (name, range) => {
+    const ranges = _.pull(this.state.customFilters[name].ranges, range)
+    const filters = { ...this.state.customFilters[name], ranges: ranges }
+    const customFilters = { ...this.state.customFilters, [name]: filters }
+    this.setState({ customFilters })
+  }
+
   showCustomFilterView = () => { this.setState({ customFilterView:
     {display: true}
   })}
@@ -165,23 +178,15 @@ class App extends React.Component {
           customFilterMenuView={ this.state.customFilterMenuView.display }/>
         {this.state.customFilterMenuView.display ? <CustomFiltersContainer
           setCustomFilters={ this.setCustomFilters }
+          clearCustomFilters={ this.clearCustomFilters }
           customFilters={ this.state.customFilters }
           showCustomFilterView={ this.showCustomFilterView }
           getNeighborhoodMatches={ this.getNeighborhoodMatches }
           setPriority={ this.setPriority }/> : null
         }
-
       </div >
     )
   }
-  // <CustomFiltersContainer
-  //   setCustomFilters={ this.setCustomFilters }
-  //   customFilters={ this.state.customFilters }
-  //   showCustomFilterView={ this.showCustomFilterView }
-  //   getNeighborhoodMatches={ this.getNeighborhoodMatches }
-  //   setPriority={ this.setPriority }/>
-
-
 }
 
 

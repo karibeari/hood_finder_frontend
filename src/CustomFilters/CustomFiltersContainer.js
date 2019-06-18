@@ -104,6 +104,7 @@ export default class CustomFiltersContainer extends Component {
                         max={item.max}
                         filter={item}
                         setCustomFilters={ this.props.setCustomFilters }
+                        clearCustomFilters={ this.props.clearCustomFilters }
                       />
                     </div>
                   )}

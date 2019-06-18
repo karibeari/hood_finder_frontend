@@ -12,20 +12,22 @@ const CheckboxContainer = (props) =>  {
   // }
 
   const displayCheckboxes = () => {
-    return props.filter.ranges.map(range => <Checkbox
-                                              name={props.name}
-                                              range={ range }
-                                              max={ props.max }
-                                              key={ range }
-                                              setCustomFilters={ props.setCustomFilters }
-                                            />)
+    return props.filter.ranges.map(range => {
+       return <Checkbox
+                name={props.name}
+                range={ range }
+                max={ props.max }
+                key={ range }
+                setCustomFilters={ props.setCustomFilters }
+                clearCustomFilters={ props.clearCustomFilters }
+              />})
   }
 
-    return(
-      <div className="checkbox-container">
-        {displayCheckboxes()}
-      </div>
-    )
+  return(
+    <div className="checkbox-container">
+      {displayCheckboxes()}
+    </div>
+  )
 }
 
 export default CheckboxContainer

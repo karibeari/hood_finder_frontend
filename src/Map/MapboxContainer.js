@@ -8,7 +8,7 @@ import CustomFiltersButton from '../CustomFilters/CustomFiltersButton'
 
 
 const Map = ReactMapboxGl({
-  accessToken: "pk.eyJ1Ijoia2FyaWZl0YXBjeHhncHVscWgifQ.f6ckouYcZFsUJwYDDRamyw"
+  accessToken: "pk.eyJ1Ijoia2FyjllZjBxOHU0YXBjeHhncHVscWgifQ.f6ckouYcZFsUJwYDDRamyw"
 })
 
 export default class MapboxContainer extends Component {
@@ -20,7 +20,6 @@ export default class MapboxContainer extends Component {
     }
   }
 
-
   // displaySchools = () => {
   //   const schools = this.props.schools || []
   //   return schools.map(school => {
@@ -28,9 +27,6 @@ export default class MapboxContainer extends Component {
   //   })
   // }
 
-  onToggleHover(cursor: string, { map }: { map: any }) {
-    map.getCanvas().style.cursor = cursor;
-  }
 
   shouldComponentUpdate(nextProps) {
     return this.props.CustomFilterMenuView !== nextProps.customFilterMenuView

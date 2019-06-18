@@ -31,9 +31,16 @@ export default class Checkbox extends Component {
     })
   }
 
+  toggleCheck = () => this.setState({ checked: !this.state.checked })
+
   handleCheckboxChange = e => {
-    this.setState({ checked: !this.state.checked })
-    this.props.setCustomFilters(this.props.name, this.state.range)
+    if (this.state.checked) {
+      this.toggleCheck()
+      this.props.clearCustomFilters(this.props.name, this.state.range)
+    } else {
+      this.toggleCheck()
+      this.props.setCustomFilters(this.props.name, this.state.range)
+    }
   }
 
   componentDidMount() {
