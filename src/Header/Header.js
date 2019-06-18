@@ -5,8 +5,8 @@ import LogoutButton from "./LogoutButton";
 const Header = (props) => {
   return(
     <header className="App-header">
-      <h1 id="title">Title</h1>
-      <LogoutButton logout={props.logout} />
+      <h1 id="title">HOOD HUNTER</h1>
+      { props.isLoggedIn ? <LogoutButton logout={ props.logout } /> : null }
     </header>
   )
 }

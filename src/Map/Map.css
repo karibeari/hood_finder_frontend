@@ -1,4 +1,11 @@
-#mapbox-container {
+@import url('https://fonts.googleapis.com/css?family=Marvel|Pragati+Narrow&display=swap');
+
+.mapbox-container {
+  grid-column: 1/5;
+  grid-row: 2/3;
+}
+
+.mapbox-container-small {
   grid-column: 2/5;
   grid-row: 2/3;
 }
@@ -9,25 +16,27 @@
 }
 
 .mapboxgl-map {
-  height: 80vh;
+  max-height: 85vh;
 }
 
 #polygon-container {
   display: grid;
-  grid-template-columns: 15% 1fr 15%;
+  grid-template-columns: 20% 1fr 20%;
+  grid-template-rows: 20%;
   height: 80vh;
+  font-family: 'Marvel', sans-serif;
 }
 
 #button-container {
   grid-column: 1/2;
-  padding-top: 20%;
-  padding-bottom: 20%;
+  grid-row: 2/3;
+  padding: 20%;
 }
 
 #key-container {
   grid-column: 3/4;
-  display: flex;
-  flex-direction: column;
+  grid-row: 2/3;
+  line-height: normal;
 }
 
 #key {
@@ -37,9 +46,8 @@
   border-radius:10px;
   border:2px solid #3866a3;
   color:#14396a;
-  font-family:Arial;
-  font-size:10px;
-  font-weight:bold;
+  font-size:15px;
+  font-weight: bold;
   padding:2%;
   margin-right: 10%;
   text-decoration:none;
@@ -84,7 +92,6 @@
 	display:inline-block;
 	cursor:pointer;
 	color:#14396a;
-	font-family:Arial;
 	font-size:15px;
 	font-weight:bold;
 	padding:12px 24px;
@@ -92,6 +99,7 @@
 	text-decoration:none;
 	text-shadow:0px 0px 0px #7cacde;
 }
+
 .filter-button:hover {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #468ccf), color-stop(1, #63b8ee));
 	background:-moz-linear-gradient(top, #468ccf 5%, #63b8ee 100%);
@@ -102,6 +110,7 @@
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#468ccf', endColorstr='#63b8ee',GradientType=0);
 	background-color:#468ccf;
 }
+
 .filter-button:active {
 	position:relative;
 	top:1px;

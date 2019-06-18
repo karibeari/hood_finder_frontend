@@ -3,7 +3,7 @@ import Polygon from './Polygon'
 import Key from './Key'
 import CustomFilterKey from './CustomFilterKey'
 import neighborhoodCoords from './neighborhoodCoords'
-import { population_filter, over65_filter, under18_filter, custom_filter } from '../Filters'
+import { population_filter, over65_filter, under18_filter, zestimate_filter, custom_filter } from '../Filters'
 
 export default class PolygonContainer extends Component {
 
@@ -14,7 +14,8 @@ export default class PolygonContainer extends Component {
         noFilter: {display: true},
         population: {display: false},
         over65: {display: false},
-        under18: {display: false}
+        under18: {display: false},
+        zestimate: {display: false}
       }
     }
   }
@@ -24,7 +25,8 @@ export default class PolygonContainer extends Component {
       noFilter: {display: false},
       population: {display: false},
       over65: {display: false},
-      under18: {display: false}
+      under18: {display: false},
+      zestimate: {display: false}
     }
     buttons[event.target.id].display = true
     this.setState({ buttons })
@@ -74,9 +76,8 @@ export default class PolygonContainer extends Component {
             color = "#FFF"
             break;
         }
-        // console.log(neighborhood.match_score, color)
         return this.colorPolygon(mapNeighborhood, color, neighborhood)
-      }
+      } else {return null}
     })
   })
 
@@ -103,7 +104,37 @@ export default class PolygonContainer extends Component {
             break;
         }
         return this.colorPolygon(mapNeighborhood, color, neighborhood)
-      }
+      } else {return null}
+    })
+  })
+
+  zestimatePolygons = () => neighborhoodCoords.map( mapNeighborhood => {
+    const { colors, limits } = zestimate_filter
+    let color = ""
+    return this.props.neighborhoods.map ( neighborhood => {
+      if (parseInt(mapNeighborhood.id) === neighborhood.id) {
+        switch (true) {
+          case (neighborhood.zestimate <= limits[0]):
+            color = colors[0]
+            break;
+          case (neighborhood.zestimate <= limits[1]):
+            color = colors[1]
+            break;
+          case (neighborhood.zestimate <= limits[2]):
+            color = colors[2]
+            break;
+          case (neighborhood.zestimate <= limits[3]):
+            color = colors[3]
+            break;
+          case (neighborhood.zestimate > limits[3]):
+            color = colors[4]
+            break;
+          default:
+            color = "#FFF"
+            break;
+        }
+        return this.colorPolygon(mapNeighborhood, color, neighborhood)
+      } else {return null}
     })
   })
 
@@ -127,7 +158,7 @@ export default class PolygonContainer extends Component {
             break;
         }
         return this.colorPolygon(mapNeighborhood, color, neighborhood)
-      }
+      } else {return null}
     })
   })
 
@@ -154,7 +185,7 @@ export default class PolygonContainer extends Component {
             break;
         }
         return this.colorPolygon(mapNeighborhood, color, neighborhood)
-      }
+      } else {return null}
     })
   })
 
@@ -164,7 +195,7 @@ export default class PolygonContainer extends Component {
     })
 
   render() {
-    const { noFilter, population, over65, under18 } = this.state.buttons
+    const { noFilter, population, over65, under18, zestimate } = this.state.buttons
     return (
       <div id="polygon-container">
         <div id="button-container">
@@ -172,16 +203,19 @@ export default class PolygonContainer extends Component {
           <button id="population" className="filter-button" onClick={this.toggleFilter}>{"Population"}</button>
           <button id="over65" className="filter-button" onClick={this.toggleFilter}>Over65</button>
           <button id="under18" className="filter-button" onClick={this.toggleFilter}>Under18</button>
+          <button id="zestimate" className="filter-button" onClick={this.toggleFilter}>Median Home Value</button>
         </div>
           { noFilter.display && this.clearPolygons() }
           { population.display && this.populationPolygons() }
           { over65.display && this.over65Polygons() }
           { under18.display && this.under18Polygons() }
+          { zestimate.display && this.zestimatePolygons() }
           { this.props.customFilterView.display && this.customFilterPolygons() }
         <div id="key-container">
           { population.display && this.makeKey(population_filter) }
           { over65.display && this.makeKey(over65_filter) }
           { under18.display && this.makeKey(under18_filter) }
+          { zestimate.display && this.makeKey(zestimate_filter) }
           { this.props.customFilterView.display && <CustomFilterKey /> }
         </div>
       </div>

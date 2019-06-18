@@ -25,28 +25,33 @@ class App extends React.Component {
       customFilters: {
         population: {
           priority: 1,
-          range: { min: 0, max: 35000000 }
+          ranges: []
         },
         percent_over_65: {
           priority: 2,
-          range: { min: 0, max: 100 }
+          ranges: []
         },
         percent_under_18: {
           priority: 3,
-          range: { min: 0, max: 100 }
+          ranges: []
+        },
+        median_home_value: {
+          priority: 4,
+          ranges: []
         }
       },
       favorites: [],
       neighborhoods: [],
       schools: [],
-      customFilterView: {display: false}
+      customFilterView: {display: false},
+      customFilterMenuView: {display: false}
     }
   }
 
-  factorialize = num => {
-    let result = 1
+  potentialScore = num => {
+    let result = 0
     while (num > 0) {
-      result = result * num
+      result = result + num
       num -=1
     }
     return result
@@ -63,33 +68,47 @@ class App extends React.Component {
 
   getNeighborhoodMatches = () => {
     let num_of_filters = _.keys(this.state.customFilters).length
-    let potential_score = this.factorialize(num_of_filters)
-
+    let potential_score = this.potentialScore(num_of_filters)
     let neighborhoods = this.state.neighborhoods.map((neighborhood, index) => {
       let match_score = 0
 
-      let { range, priority } = this.state.customFilters.population
-      let { min, max } = range
-      if (neighborhood.POPULATION_2010 > min && neighborhood.POPULATION_2010 < max) {
-        match_score = num_of_filters + 1 - priority
-      }
+      let { ranges, priority } = this.state.customFilters.population
+      ranges.map(range => {
+        let { min, max } = range
+        if (neighborhood.POPULATION_2010 >= min && neighborhood.POPULATION_2010 <= max) {
+          match_score = num_of_filters + 1 - priority
+        }
+      })
 
       priority = this.state.customFilters.percent_under_18.priority
-      min = this.state.customFilters.percent_under_18.range.min
-      max = this.state.customFilters.percent_under_18.range.max
-      if (neighborhood.PCT_LESS_18 > min && neighborhood.PCT_LESS_18 < max) {
-        match_score += num_of_filters + 1 - priority
-      }
+      ranges = this.state.customFilters.percent_under_18.ranges
+      ranges.map(range => {
+        let { min, max } = range
+        if (Math.round(neighborhood.PCT_LESS_18) >= min && Math.round(neighborhood.PCT_LESS_18) <= max) {
+          match_score += num_of_filters + 1 - priority
+        }
+      })
 
       priority = this.state.customFilters.percent_over_65.priority
-      min = this.state.customFilters.percent_over_65.range.min
-      max = this.state.customFilters.percent_over_65.range.max
-      if (neighborhood.PCT_65_PLUS > min && neighborhood.PCT_65_PLUS < max) {
-        match_score += (num_of_filters + 1 - priority)
-      }
+      ranges = this.state.customFilters.percent_over_65.ranges
+      ranges.map(range => {
+        let { min, max } = range
+        if (Math.round(neighborhood.PCT_65_PLUS) >= min && Math.round(neighborhood.PCT_65_PLUS) <= max) {
+          match_score += num_of_filters + 1 - priority
+        }
+      })
+
+      priority = this.state.customFilters.median_home_value.priority
+      ranges = this.state.customFilters.median_home_value.ranges
+      ranges.map(range => {
+        let { min, max } = range
+        if (neighborhood.zestimate >= min && neighborhood.zestimate <= max) {
+          match_score += num_of_filters + 1 - priority
+        }
+      })
+
       match_score = match_score/potential_score * 100
       neighborhood.match_score = match_score
-      console.log( neighborhood.NBRHD_NAME, match_score )
       return neighborhood
     })
     this.setState({ neighborhoods })
@@ -119,31 +138,49 @@ class App extends React.Component {
 
 //sets state with user adjusted filters
   setCustomFilters = (name, range) => {
-    const filters = { ...this.state.customFilters[name], range: range }
-    this.setState({ customFilters: { ...this.state.customFilters, [name]: filters } })
+    const ranges = [...this.state.customFilters[name].ranges, range]
+    const filters = { ...this.state.customFilters[name], ranges: ranges }
+    const customFilters = { ...this.state.customFilters, [name]: filters }
+    this.setState({ customFilters })
   }
 
-  showCustomFilterView = () => {this.setState({ customFilterView:
+  showCustomFilterView = () => { this.setState({ customFilterView:
     {display: true}
   })}
+
+  toggleCustomFilterMenu = () => { this.setState({ customFilterMenuView:
+    {display: !this.state.customFilterMenuView.display }
+  })}
+
 
   render(){
     return(
       <div className="App">
-        <Header logout={ this.logout } />
+        <Header logout={ this.logout } isLoggedIn={ this.state.isLoggedIn }/>
         <MapboxContainer
           neighborhoods={ this.state.neighborhoods}
           schools={ this.state.schools }
-          customFilterView={ this.state.customFilterView } />
-        <CustomFiltersContainer
+          customFilterView={ this.state.customFilterView }
+          toggleCustomFilterMenu={ this.toggleCustomFilterMenu }
+          customFilterMenuView={ this.state.customFilterMenuView.display }/>
+        {this.state.customFilterMenuView.display ? <CustomFiltersContainer
           setCustomFilters={ this.setCustomFilters }
           customFilters={ this.state.customFilters }
           showCustomFilterView={ this.showCustomFilterView }
           getNeighborhoodMatches={ this.getNeighborhoodMatches }
-          setPriority={ this.setPriority }/>
+          setPriority={ this.setPriority }/> : null
+        }
+
       </div >
     )
   }
+  // <CustomFiltersContainer
+  //   setCustomFilters={ this.setCustomFilters }
+  //   customFilters={ this.state.customFilters }
+  //   showCustomFilterView={ this.showCustomFilterView }
+  //   getNeighborhoodMatches={ this.getNeighborhoodMatches }
+  //   setPriority={ this.setPriority }/>
+
 
 }
 

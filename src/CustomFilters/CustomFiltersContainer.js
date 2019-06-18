@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { population_filter, over65_filter, under18_filter } from '../Filters'
-import RangeSlider from './RangeSlider'
-
+import { population_filter, over65_filter, under18_filter, zestimate_filter } from '../Filters'
+import CheckboxContainer from './CheckboxContainer'
 import FindMatchButton from './FindMatchButton'
+import _ from 'lodash'
 import './CustomFilters.css'
 
-import _ from 'lodash'
-
-const allFilters = [population_filter, over65_filter, under18_filter]
+const allFilters = [population_filter, over65_filter, under18_filter, zestimate_filter]
 
 const getItems = () =>
   Array.from(allFilters, filter => filter).map((filter, index) => ({
@@ -16,14 +14,13 @@ const getItems = () =>
     content: filter.title,
     ranges: filter.ranges,
     title: filter.title,
-    max: _.takeRight(filter.limits)
+    max: _.takeRight(filter.limits)[0]
   }));
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
-
   return result;
 };
 
@@ -39,13 +36,15 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 	fontFamily: 'Arial',
 	fontSize: '15px',
 	fontWeight: 'bold',
+  width: '100%',
   background: isDragging ? "grey" : "#44A1A0",
   ...draggableStyle
 });
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? "lightblue" : "#D9DCDD",
-  padding: "5%"
+  backgroundImage: "linear-gradient(#6CAAD1, #FF9585)",
+  padding: "5%",
+  overflow: 'scroll'
 })
 
 export default class CustomFiltersContainer extends Component {
@@ -73,14 +72,6 @@ export default class CustomFiltersContainer extends Component {
     this.props.setPriority(items)
   }
 
-  displayRangeSliders = (allFilters) => {
-    allFilters.map(filter => <RangeSlider
-        filter={filter.ranges}
-        name={filter.title}
-        setCustomFilters={ this.props.setCustomFilters }
-        max={ _.takeRight(filter.limits) }
-      />)
-  }
 
   render() {
     return (
@@ -92,8 +83,11 @@ export default class CustomFiltersContainer extends Component {
               ref={provided.innerRef}
               style={getListStyle(snapshot.isDraggingOver)}
             >
+            <p>Drag and drop each filter in order of highest to lowest priority.  Then, select your preferrable ranges.</p>
+            <h1>Higher Priority</h1>
               {this.state.items.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
+                <div className="priority" key={item.id}>
+                <Draggable  draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}
@@ -105,15 +99,18 @@ export default class CustomFiltersContainer extends Component {
                       )}
                     >
                       <h3 className="filter-header">{item.content}</h3>
-                      <RangeSlider
-                        filter={item.ranges}
-                        name={item.title}
+                      <CheckboxContainer
+                        name={item.id}
+                        max={item.max}
+                        filter={item}
                         setCustomFilters={ this.props.setCustomFilters }
-                        max={ item.max }/>
+                      />
                     </div>
                   )}
                 </Draggable>
+              </div>
               ))}
+              <h1>Lower Priority</h1>
               {provided.placeholder}
               <FindMatchButton
                 customFilters={ this.props.customFilters }
@@ -123,7 +120,6 @@ export default class CustomFiltersContainer extends Component {
             </div>
           )}
         </Droppable>
-
       </DragDropContext>
     );
   }

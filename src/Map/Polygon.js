@@ -2,9 +2,17 @@ import React, { Component } from "react";
 import { Layer, Feature} from 'react-mapbox-gl';
 import Swal from 'sweetalert2'
 
-export default class Polygon extends Component {
+let opacity = 0.7
 
-  onToggleHover = (cursor: string, { map }: { map: any }) => {map.getCanvas().style.cursor = cursor}
+export default class Polygon extends Component {
+  constructor () {
+    super ()
+    this.state = {
+      hover: false
+    }
+  }
+
+  onHover = () => {this.setState({hover: !this.state.hover})}
 
   render() {
     let { mapNeighborhood, color, neighborhood } = this.props
@@ -14,13 +22,15 @@ export default class Polygon extends Component {
               type="fill"
               paint={{
                 'fill-color': `${color}`,
-                'fill-opacity': 0.8,
+                'fill-opacity': opacity,
                 'fill-outline-color': "#FFF"
               }}
+
               className="polygon"
         >
             <Feature
               coordinates={ [mapNeighborhood.coordinates] }
+              style={{'cursor':'pointer'}}
               onClick={ () => Swal.fire({
                 title: neighborhood.NBRHD_NAME,
                 html: `<p>Population: ${neighborhood.POPULATION_2010}</p>
@@ -37,7 +47,12 @@ export default class Polygon extends Component {
                 `
               })}
               onMouseEnter={ () => {
-                color = "#FFF"
+                opacity = 1
+                this.onHover()
+              }}
+              onMouseLeave={ () => {
+                opacity = 0.7
+                this.onHover()
               }}
             />
         </Layer>

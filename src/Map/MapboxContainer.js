@@ -3,9 +3,12 @@ import ReactMapboxGl, {  ZoomControl } from 'react-mapbox-gl';
 // import MapMarker from './MapMarker';
 import './Map.css'
 import PolygonContainer from './PolygonContainer'
+import CustomFiltersButton from '../CustomFilters/CustomFiltersButton'
+
+
 
 const Map = ReactMapboxGl({
-  accessToken: "pk.eyJ1Ijoia2FyaWZlcXBjeHhncHVscWgifQ.f6ckouYcZFsUJwYDDRamyw"
+  accessToken: "pk.eyJ1Ijoia2FyaWZl0YXBjeHhncHVscWgifQ.f6ckouYcZFsUJwYDDRamyw"
 })
 
 export default class MapboxContainer extends Component {
@@ -16,6 +19,7 @@ export default class MapboxContainer extends Component {
       neighborhood: null
     }
   }
+
 
   // displaySchools = () => {
   //   const schools = this.props.schools || []
@@ -28,16 +32,20 @@ export default class MapboxContainer extends Component {
     map.getCanvas().style.cursor = cursor;
   }
 
+  shouldComponentUpdate(nextProps) {
+    return this.props.CustomFilterMenuView !== nextProps.customFilterMenuView
+  }
+
   render() {
     // const { neighborhood } = this.state
     return (
-      <div id="mapbox-container">
+      <div className={ this.props.customFilterMenuView ? "mapbox-container-small" : "mapbox-container"}>
         <Map
-          style={"mapbox://styles/mapbox/streets-v8"}
+          style="mapbox://styles/mapbox/streets-v8"
           zoom={[11]}
           center={[-104.920999, 39.727388]}
           >
-          {this.displaySchools}
+          <CustomFiltersButton className="filter-menu-parent" toggleCustomFilterMenu={ this.props.toggleCustomFilterMenu } customFilterMenuView={ this.props.customFilterMenuView }/>
           <ZoomControl />
           <PolygonContainer neighborhoods={ this.props.neighborhoods } customFilterView={ this.props.customFilterView }/>
         </Map>

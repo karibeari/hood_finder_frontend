@@ -1,10 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Marvel:400,700|Poiret+One&display=swap');
+
 .App {
   text-align: center;
   height: 100vh;
   width: auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 20%;
+  grid-template-rows: 15%;
+  font-family: 'Marvel', sans-serif;
+}
+
+h1 {
+  margin: 10px;
 }
 
 .mapboxgl-map {
@@ -37,8 +44,8 @@
 	display:inline-block;
 	cursor:pointer;
 	color:#14396a;
-	font-family:Arial;
-	font-size:15px;
+  font-family: 'Marvel', sans-serif;
+  font-size:15px;
 	font-weight:bold;
 	padding:12px 24px;
   margin: 3%;
@@ -52,4 +59,8 @@
 .app-button:active {
 	position:relative;
 	top:1px;
+}
+
+button {
+  font-family: 'Marvel', sans-serif;
 }
