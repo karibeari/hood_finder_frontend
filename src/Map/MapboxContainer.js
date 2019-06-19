@@ -8,7 +8,7 @@ import CustomFiltersButton from '../CustomFilters/CustomFiltersButton'
 
 
 const Map = ReactMapboxGl({
-  accessToken: "pk.eyJ1Ijoia2FyjllZjBxOHU0YXBjeHhncHVscWgifQ.f6ckouYcZFsUJwYDDRamyw"
+  accessToken: "pk.eyJ1Ijoia2cWgifQ.f6ckouYcZFsUJwYDDRamyw"
 })
 
 export default class MapboxContainer extends Component {

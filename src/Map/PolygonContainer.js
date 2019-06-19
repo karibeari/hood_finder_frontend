@@ -199,8 +199,8 @@ export default class PolygonContainer extends Component {
     return (
       <div id="polygon-container">
         <div id="button-container">
-          <button id="noFilter" className="filter-button" onClick={this.toggleFilter}>Clear Map Filters</button>
-          <button id="population" className="filter-button" onClick={this.toggleFilter}>{"Population"}</button>
+          <button id="noFilter" className="filter-button" onClick={this.toggleFilter}>Clear All Map Filters</button>
+          <button id="population" className="filter-button" onClick={this.toggleFilter}>Population</button>
           <button id="over65" className="filter-button" onClick={this.toggleFilter}>Over65</button>
           <button id="under18" className="filter-button" onClick={this.toggleFilter}>Under18</button>
           <button id="zestimate" className="filter-button" onClick={this.toggleFilter}>Median Home Value</button>

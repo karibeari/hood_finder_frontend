@@ -65,6 +65,43 @@
   margin-left: 15%;
 }
 
+.neighborhood-modal {
+  position:fixed;
+  background: #FFF;
+  width: 50%;
+  top:50%;
+  left:50%;
+  height: 50%;
+  padding: 2%;
+  display: grid;
+  text-align: center;
+  grid-template-rows: 10% 1fr 5%;
+  grid-template-columns: 5% 1fr 5%;
+  transform: translate(-50%,-50%);
+}
+
+#neighborhood-title {
+  grid-row: 1/2;
+  grid-column: 2/3;
+  font-size: 3em;
+}
+
+#neighborhood-content {
+  grid-row: 2/3;
+  grid-column: 2/3;
+  display: inline-flex;
+}
+
+#neighborhood-button {
+  grid-row: 3/4;
+  grid-column: 2/3;
+}
+
+.pie-chart {
+  padding: 5%;
+}
+
+
 .color-value {
   float: left;
   width: 10px;
