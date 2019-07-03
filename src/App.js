@@ -43,7 +43,10 @@ class App extends React.Component {
       favorites: [],
       neighborhoods: [],
       schools: [],
-      customFilterView: {display: false},
+      activeFilter: {
+        id: 'noFilter',
+        title: 'Clear All Filters'
+      },
       customFilterMenuView: {display: false}
     }
   }
@@ -160,6 +163,10 @@ class App extends React.Component {
     {display: !this.state.customFilterMenuView.display }
   })}
 
+  setActiveFilter = filter => this.setState({ activeFilter: filter})
+
+  // this.setState({ event.target.id })
+
 
   render(){
     return(
@@ -168,6 +175,9 @@ class App extends React.Component {
         <MapboxContainer
           neighborhoods={ this.state.neighborhoods}
           schools={ this.state.schools }
+          setActiveFilter={ this.setActiveFilter }
+          activeFilter={ this.state.activeFilter }
+
           customFilterView={ this.state.customFilterView }
           toggleCustomFilterMenu={ this.toggleCustomFilterMenu }
           customFilterMenuView={ this.state.customFilterMenuView.display }/>

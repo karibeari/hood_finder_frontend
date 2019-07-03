@@ -1,38 +1,14 @@
 import React, { Component } from "react";
 import Polygon from './Polygon'
-import Key from './Key'
-import CustomFilterKey from './CustomFilterKey'
-import neighborhoodCoords from './neighborhoodCoords'
-import { population_filter, over65_filter, under18_filter, zestimate_filter, custom_filter } from '../Filters'
+import Key from './Keys/Key'
+import CustomFilterKey from './Keys/CustomFilterKey'
+import FilterButton from './FilterButton'
+import ClearPolygons from './ClearPolygons'
+import FilterPolygons from './FilterPolygons'
+import neighborhoodCoords from '../neighborhoodCoords'
+import { filters, population_filter, over65_filter, under18_filter, zestimate_filter, custom_filter } from '../../Filters'
 
 export default class PolygonContainer extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      buttons: {
-        noFilter: {display: true},
-        population: {display: false},
-        over65: {display: false},
-        under18: {display: false},
-        zestimate: {display: false}
-      }
-    }
-  }
-
-  toggleFilter = (event) => {
-    const buttons = {
-      noFilter: {display: false},
-      population: {display: false},
-      over65: {display: false},
-      under18: {display: false},
-      zestimate: {display: false}
-    }
-    buttons[event.target.id].display = true
-    this.setState({ buttons })
-  }
-
-  makeKey = (filter) => <Key filter={filter}/>
 
   colorPolygon = (mapNeighborhood, color, neighborhood) =>  <Polygon mapNeighborhood={mapNeighborhood} color={color} neighborhood={neighborhood} showInfo={this.showInfo} key={neighborhood.id}/>
 
@@ -194,31 +170,34 @@ export default class PolygonContainer extends Component {
     return this.props.neighborhoods.map ( neighborhood => parseInt(mapNeighborhood.id) === neighborhood.id ? this.colorPolygon(mapNeighborhood, color, neighborhood) : null )
     })
 
+  createButtons = () => filters.map( filter => <FilterButton key={ filter.id } filter={ filter} setActiveFilter={ this.props.setActiveFilter }/>)
+
+  shouldComponentUpdate(nextProps) {
+    return this.props.activeFilter !== nextProps.activeFilter
+  }
+
   render() {
-    const { noFilter, population, over65, under18, zestimate } = this.state.buttons
+    const { neighborhoods, activeFilter } = this.props
     return (
       <div id="polygon-container">
         <div id="button-container">
-          <button id="noFilter" className="filter-button" onClick={this.toggleFilter}>Clear All Map Filters</button>
-          <button id="population" className="filter-button" onClick={this.toggleFilter}>Population</button>
-          <button id="over65" className="filter-button" onClick={this.toggleFilter}>Over65</button>
-          <button id="under18" className="filter-button" onClick={this.toggleFilter}>Under18</button>
-          <button id="zestimate" className="filter-button" onClick={this.toggleFilter}>Median Home Value</button>
+          {this.createButtons()}
         </div>
-          { noFilter.display && this.clearPolygons() }
-          { population.display && this.populationPolygons() }
-          { over65.display && this.over65Polygons() }
-          { under18.display && this.under18Polygons() }
-          { zestimate.display && this.zestimatePolygons() }
-          { this.props.customFilterView.display && this.customFilterPolygons() }
+        { activeFilter.id === 'noFilter' && <ClearPolygons neighborhoods={  neighborhoods } activeFilter={ activeFilter }/> }
+        { activeFilter.id !== 'noFilter' && activeFilter.id !== 'custom' && <FilterPolygons neighborhoods={  neighborhoods } activeFilter={ activeFilter }/> }
         <div id="key-container">
-          { population.display && this.makeKey(population_filter) }
-          { over65.display && this.makeKey(over65_filter) }
-          { under18.display && this.makeKey(under18_filter) }
-          { zestimate.display && this.makeKey(zestimate_filter) }
-          { this.props.customFilterView.display && <CustomFilterKey /> }
+          { activeFilter.id !== 'noFilter' && <Key activeFilter={  activeFilter }/> }
         </div>
       </div>
     )
   }
 }
+
+// { population.display && this.populationPolygons() }
+// { over65.display && this.over65Polygons() }
+// { under18.display && this.under18Polygons() }
+// { zestimate.display && this.zestimatePolygons() }
+// { this.props.customFilterView.display && this.customFilterPolygons() }
+
+
+// { this.props.customFilterView.display && <CustomFilterKey /> }

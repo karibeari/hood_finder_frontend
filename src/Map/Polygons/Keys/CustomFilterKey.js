@@ -1,6 +1,6 @@
 import React from 'react'
 // import _ from 'lodash'
-import { custom_filter } from '../Filters'
+import { custom_filter } from '../../../Filters'
 
 const CustomFilterKey = () => {
   let { title, colors } = custom_filter
