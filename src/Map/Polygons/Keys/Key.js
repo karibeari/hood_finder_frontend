@@ -4,10 +4,10 @@ const Key = (props) => {
   const {title, colors, ranges} = props.activeFilter
 
   const keyValues = () => {
-    return colors.map((color, index) =>
+    return ranges.map((range, index) =>
     <p key={index}>
-      <span className="key-box" style={{background: `${color}`}}></span>
-      : {ranges[index]}
+      <span className="key-box" style={{background: `${colors[index]}`}}></span>
+      : {range}
     </p> )
   }
 
