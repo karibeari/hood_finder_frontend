@@ -7,7 +7,7 @@ const population_filter = {
   id: 'population',
   title: "Population",
   dataName: 'POPULATION_2010',
-  colors: ["#b3cde3", "#8c96c6", "#8856a7", "#810f7c"],
+  colors: ["#b3cde3", "#8c96c6", "#8856a7", "#810f7c", "#810f7c", "#810f7c", "#810f7c", "#810f7c", "#810f7c", "#810f7c"],
   ranges: ["0-5000", "5001 - 10,000", "10,001 - 15,000", "over 15,000"],
   limits: [5000, 10000, 15000, 20000, 25000, 30000, 35000]
 }
@@ -16,7 +16,7 @@ const over65_filter = {
   id: 'over65',
   title: "Percent Over 65",
   dataName: 'PCT_65_PLUS',
-  colors: ["#b2e2e2", "#66c2a4", "#238b45"],
+  colors: ["#b2e2e2", "#66c2a4", "#238b45", "#238b45", "#238b45", "#238b45", "#238b45", "#238b45", "#238b45", "#238b45"],
   ranges: ["0% - 10%", "11% - 20%", "over 20%"],
   limits: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 }
@@ -25,7 +25,7 @@ const under18_filter = {
   id: 'under18',
   title: "Percent Under 18",
   dataName: 'PCT_LESS_18',
-  colors: ["#bae4bc", "#7bccc4", "#43a2ca", "#0868ac"],
+  colors: ["#bae4bc", "#7bccc4", "#43a2ca", "#0868ac", "#0868ac", "#0868ac", "#0868ac", "#0868ac", "#0868ac", "#0868ac"],
   ranges: ["0% - 10%", "11% - 20%", "21% - 30%", "over 30%"],
   limits: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 }
@@ -34,7 +34,7 @@ const zestimate_filter = {
   id: 'zestimate',
   title: "Median Home Value",
   dataName: 'zestimate',
-  colors: ["#a6bddb", "#74a9cf", "#3690c0", "#0570b0", "#034e7b"],
+  colors: ["#a6bddb", "#74a9cf", "#3690c0", "#0570b0", "#034e7b", "#034e7b", "#034e7b", "#034e7b", "#034e7b", "#034e7b"],
   ranges: ["$0 - $300,000", "$300,001 - $400,000", "$400,001 - $500,000", "$500,001 - $600,000", "over $600,000"],
   limits: [300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 1100000, 1200000, 1300000]
 }

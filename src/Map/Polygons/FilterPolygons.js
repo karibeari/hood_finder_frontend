@@ -21,9 +21,28 @@ const FilterPolygons = ({ neighborhoods, activeFilter }) => {
           case (neighborhood[dataName] <= limits[2]):
             color = colors[2]
             break;
-          case (neighborhood[dataName] > limits[2]):
+          case (neighborhood[dataName] <= limits[3]):
             color = colors[3]
             break;
+          case (neighborhood[dataName] <= limits[4]):
+            color = colors[4]
+            break;
+          case (neighborhood[dataName] <= limits[5]):
+            color = colors[5]
+            break;
+          case (neighborhood[dataName] <= limits[6]):
+            color = colors[6]
+            break;
+          case (neighborhood[dataName] <= limits[7]):
+            color = colors[7]
+            break;
+          case (neighborhood[dataName] <= limits[8]):
+            color = colors[8]
+            break;
+          case (neighborhood[dataName] <= limits[9]):
+            color = colors[9]
+            break;
+
           default:
             color = "#FFF"
             break;
