@@ -155,18 +155,11 @@ class App extends React.Component {
     this.setState({ customFilters })
   }
 
-  showCustomFilterView = () => { this.setState({ customFilterView:
-    {display: true}
-  })}
-
   toggleCustomFilterMenu = () => { this.setState({ customFilterMenuView:
     {display: !this.state.customFilterMenuView.display }
   })}
 
   setActiveFilter = filter => this.setState({ activeFilter: filter})
-
-  // this.setState({ event.target.id })
-
 
   render(){
     return(
@@ -185,7 +178,7 @@ class App extends React.Component {
           setCustomFilters={ this.setCustomFilters }
           clearCustomFilters={ this.clearCustomFilters }
           customFilters={ this.state.customFilters }
-          showCustomFilterView={ this.showCustomFilterView }
+          setActiveFilter={ this.setActiveFilter }
           getNeighborhoodMatches={ this.getNeighborhoodMatches }
           setPriority={ this.setPriority }/> : null
         }

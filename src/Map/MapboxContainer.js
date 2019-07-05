@@ -31,7 +31,6 @@ export default class MapboxContainer extends Component {
   }
 
   render() {
-    // const { neighborhood } = this.state
     return (
       <div className={ this.props.customFilterMenuView ? "mapbox-container-small" : "mapbox-container"}>
         <Map

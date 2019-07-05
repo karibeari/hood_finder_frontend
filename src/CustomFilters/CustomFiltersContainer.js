@@ -115,7 +115,7 @@ export default class CustomFiltersContainer extends Component {
               {provided.placeholder}
               <FindMatchButton
                 customFilters={ this.props.customFilters }
-                showCustomFilterView={ this.props.showCustomFilterView }
+                setActiveFilter={ this.props.setActiveFilter }
                 getNeighborhoodMatches={ this.props.getNeighborhoodMatches }
               />
             </div>
