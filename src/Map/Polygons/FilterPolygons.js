@@ -4,8 +4,6 @@ import neighborhoodCoords from '../neighborhoodCoords'
 
 const FilterPolygons = ({ neighborhoods, activeFilter }) => {
 
-
-//fix case statements to be more dynamic for all limits for each filter
   const filterPolygons = () => neighborhoodCoords.map( mapNeighborhood => {
     const { colors, limits, dataName } = activeFilter
     let color = ""
@@ -42,7 +40,6 @@ const FilterPolygons = ({ neighborhoods, activeFilter }) => {
           case (neighborhood[dataName] <= limits[9]):
             color = colors[9]
             break;
-
           default:
             color = "#FFF"
             break;
