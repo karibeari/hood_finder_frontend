@@ -7,21 +7,21 @@ const FilterPolygons = ({ neighborhoods, activeFilter }) => {
 
 //fix case statements to be more dynamic for all limits for each filter
   const filterPolygons = () => neighborhoodCoords.map( mapNeighborhood => {
-    const { colors, limits } = activeFilter
+    const { colors, limits, dataName } = activeFilter
     let color = ""
     return neighborhoods.map ( neighborhood => {
       if (parseInt(mapNeighborhood.id) === neighborhood.id) {
         switch (true) {
-          case (neighborhood[activeFilter.dataName] <= limits[0]):
+          case (neighborhood[dataName] <= limits[0]):
             color = colors[0]
             break;
-          case (neighborhood[activeFilter.dataName] <= limits[1]):
+          case (neighborhood[dataName] <= limits[1]):
             color = colors[1]
             break;
-          case (neighborhood[activeFilter.dataName] <= limits[2]):
+          case (neighborhood[dataName] <= limits[2]):
             color = colors[2]
             break;
-          case (neighborhood[activeFilter.dataName] > limits[2]):
+          case (neighborhood[dataName] > limits[2]):
             color = colors[3]
             break;
           default:

@@ -42,9 +42,10 @@ const zestimate_filter = {
 const custom_filter = {
   id: 'custom',
   title: "Your Match",
+  dataName: 'match_score',
   colors: ["#a50026", "#d73027", "#f46d43", "#fdae61", "#fee08b", "#d9ef8b", "#a6d96a", "#66bd63","#1a9850", "#006837"],
-  ranges: ["0% - 10%", "11% - 20%", "21% - 30%", "over 30%"],
-  limits: [10, 20, 30, 40, 50, 60, 70, 80, 90]
+  ranges: ["0% - 10%", "11% - 20%", "21% - 30%", "31% - 40%", "41% - 50%", "51% - 60%", "61% - 70%", "71% - 80%", "81% - 90%", "91% - 100%"],
+  limits: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 }
 
 const filters = [clear_filter, population_filter, over65_filter, under18_filter, zestimate_filter]
