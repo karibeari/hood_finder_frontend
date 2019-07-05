@@ -18,7 +18,8 @@ export default class PolygonContainer extends Component {
   createButtons = () => filters.map( filter => <FilterButton key={ filter.id } filter={ filter} setActiveFilter={ this.props.setActiveFilter }/>)
 
   shouldComponentUpdate(nextProps) {
-    return this.props.activeFilter !== nextProps.activeFilter || this.props.neighborhoods !== nextProps.neighorhoods
+    const { activeFilter, neighborhoods } = this.props
+    return activeFilter !== nextProps.activeFilter || neighborhoods !== nextProps.neighorhoods
   }
 
   render() {
