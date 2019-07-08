@@ -8,10 +8,10 @@ import CustomFiltersContainer from "./CustomFilters/CustomFiltersContainer";
 import _ from 'lodash'
 // import Swal from 'sweetalert2'
 
-// const authenticateURL = "http://localhost:3000/authenticate"
-const neighborhoodsURL = "http://localhost:3000/neighborhoods"
-const schoolsURL = "http://localhost:3000/schools"
-// const usersURL = "http://localhost:3000/users"
+// const authenticateURL = "https://hood-hunter-denver.herokuapp.com/authenticate"
+const neighborhoodsURL = "https://hood-hunter-denver.herokuapp.com/neighborhoods"
+const schoolsURL = "https://hood-hunter-denver.herokuapp.com/schools"
+// const usersURL = "https://hood-hunter-denver.herokuapp.com/users"
 
 const urls = [neighborhoodsURL, schoolsURL]
 
