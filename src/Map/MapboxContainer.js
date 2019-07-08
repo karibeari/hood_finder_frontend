@@ -6,7 +6,7 @@ import PolygonContainer from './Polygons/PolygonContainer'
 import CustomFiltersButton from '../CustomFilters/CustomFiltersButton'
 
 const Map = ReactMapboxGl({
-  accessToken: "pk.eyJ1Ijoia2FyaWZlcmVuY3p5IiwiYSI6ImNqd2t0cjllZjBxOHU0YXBjeHhncHVscWgifQ.f6ckouYcZFsUJwYDDRamyw"
+  accessToken: "pk.eyJ1Ijoia2FyaWZlcncHVscWgifQ.f6ckouYcZFsUJwYDDRamyw"
 })
 
 export default class MapboxContainer extends Component {
