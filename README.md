@@ -8,6 +8,8 @@ Hood Hunter is an interactive neighborhood finder with map and data visualizatio
 
 ## Getting Started
 
+* [Video Demo](https://youtu.be/131sZ1vAFMQ)
+* [Visit App](https://hood-hunter-denver.netlify.com/)
 
 ## Built With
 
