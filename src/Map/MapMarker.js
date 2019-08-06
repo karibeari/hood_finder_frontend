@@ -11,7 +11,7 @@ export default class MapMarker extends Component {
     const { latitude, longitude } = this.props.school
     return(
       <Marker
-        coordinates={[`${longitude}`, `${latitude}`]}
+        coordinates={[`${longitude*0.9992}`, `${latitude}`]}
         anchor="bottom">
         <img className="school-marker" src="https://cdn3.iconfinder.com/data/icons/map-markers-1/512/education-512.png" alt=""/>
       </Marker>
