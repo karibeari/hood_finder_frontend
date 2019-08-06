@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import ReactMapboxGl, {  ZoomControl } from 'react-mapbox-gl';
-// import MapMarker from './MapMarker';
+import MapMarker from './MapMarker';
 import './Map.css'
 import PolygonContainer from './Polygons/PolygonContainer'
 import CustomFiltersButton from '../CustomFilters/CustomFiltersButton'
-
 
 const Map = ReactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_API_KEY
@@ -19,13 +18,12 @@ export default class MapboxContainer extends Component {
     }
   }
 
-  // displaySchools = () => {
-  //   const schools = this.props.schools || []
-  //   return schools.map(school => {
-  //     return <MapMarker school={school} key={school.id}/>
-  //   })
-  // }
-
+  displaySchools = () => {
+    const schools = this.props.schools || []
+    return schools.map(school => {
+      return <MapMarker school={school} key={school.id}/>
+    })
+  }
 
   shouldComponentUpdate(nextProps) {
     return this.props.CustomFilterMenuView !== nextProps.customFilterMenuView
@@ -39,6 +37,7 @@ export default class MapboxContainer extends Component {
           zoom={[11]}
           center={[-104.920999, 39.727388]}
           >
+          {this.displaySchools()}
           <CustomFiltersButton
             className="filter-menu-parent"
             toggleCustomFilterMenu={ this.props.toggleCustomFilterMenu }
