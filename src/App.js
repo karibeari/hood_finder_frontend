@@ -162,22 +162,23 @@ class App extends React.Component {
   setActiveFilter = filter => this.setState({ activeFilter: filter})
 
   render(){
+    const { isLoggedIn, neighborhoods, schools, activeFilter, customFilterView, customFilterMenuView, customFilters} = this.state
     return(
       <div className="App">
-        <Header logout={ this.logout } isLoggedIn={ this.state.isLoggedIn }/>
+        <Header logout={ this.logout } isLoggedIn={ isLoggedIn }/>
         <MapboxContainer
-          neighborhoods={ this.state.neighborhoods}
-          schools={ this.state.schools }
+          neighborhoods={ neighborhoods}
+          schools={ schools }
           setActiveFilter={ this.setActiveFilter }
-          activeFilter={ this.state.activeFilter }
+          activeFilter={ activeFilter }
 
-          customFilterView={ this.state.customFilterView }
+          customFilterView={ customFilterView }
           toggleCustomFilterMenu={ this.toggleCustomFilterMenu }
-          customFilterMenuView={ this.state.customFilterMenuView.display }/>
-        {this.state.customFilterMenuView.display ? <CustomFiltersContainer
+          customFilterMenuView={ customFilterMenuView.display }/>
+        {customFilterMenuView.display ? <CustomFiltersContainer
           setCustomFilters={ this.setCustomFilters }
           clearCustomFilters={ this.clearCustomFilters }
-          customFilters={ this.state.customFilters }
+          customFilters={ customFilters }
           setActiveFilter={ this.setActiveFilter }
           getNeighborhoodMatches={ this.getNeighborhoodMatches }
           setPriority={ this.setPriority }/> : null
