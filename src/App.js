@@ -70,43 +70,37 @@ class App extends React.Component {
   }
 
   getNeighborhoodMatches = () => {
-    let num_of_filters = _.keys(this.state.customFilters).length
+    const { customFilters } = this.state
+    let num_of_filters = _.keys(customFilters).length
     let potential_score = this.potentialScore(num_of_filters)
     let neighborhoods = this.state.neighborhoods.map((neighborhood, index) => {
       let match_score = 0
 
-      let { ranges, priority } = this.state.customFilters.population
-      ranges.forEach(range => {
+      customFilters.population.ranges.forEach(range => {
         let { min, max } = range
         if (neighborhood.POPULATION_2010 >= min && neighborhood.POPULATION_2010 <= max) {
-          match_score = num_of_filters + 1 - priority
+          match_score = num_of_filters + 1 - customFilters.population.priority
         }
       })
 
-      priority = this.state.customFilters.percent_under_18.priority
-      ranges = this.state.customFilters.percent_under_18.ranges
-      ranges.forEach(range => {
+      customFilters.percent_under_18.ranges.forEach(range => {
         let { min, max } = range
         if (Math.round(neighborhood.PCT_LESS_18) >= min && Math.round(neighborhood.PCT_LESS_18) <= max) {
-          match_score += num_of_filters + 1 - priority
+          match_score += num_of_filters + 1 - customFilters.percent_under_18.priority
         }
       })
 
-      priority = this.state.customFilters.percent_over_65.priority
-      ranges = this.state.customFilters.percent_over_65.ranges
-      ranges.forEach(range => {
+      customFilters.percent_over_65.ranges.forEach(range => {
         let { min, max } = range
         if (Math.round(neighborhood.PCT_65_PLUS) >= min && Math.round(neighborhood.PCT_65_PLUS) <= max) {
-          match_score += num_of_filters + 1 - priority
+          match_score += num_of_filters + 1 - customFilters.percent_over_65.priority
         }
       })
 
-      priority = this.state.customFilters.median_home_value.priority
-      ranges = this.state.customFilters.median_home_value.ranges
-      ranges.forEach(range => {
+      customFilters.median_home_value.ranges.forEach(range => {
         let { min, max } = range
         if (neighborhood.zestimate >= min && neighborhood.zestimate <= max) {
-          match_score += num_of_filters + 1 - priority
+          match_score += num_of_filters + 1 - customFilters.median_home_value.priority
         }
       })
 
