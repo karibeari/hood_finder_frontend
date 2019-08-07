@@ -12,7 +12,8 @@ export default class MapMarker extends Component {
     return(
       <Marker
         coordinates={[`${longitude*0.9992}`, `${latitude}`]}
-        anchor="bottom">
+        anchor="bottom"
+      >
         <img className="school-marker" src="https://cdn3.iconfinder.com/data/icons/map-markers-1/512/education-512.png" alt=""/>
       </Marker>
     )
