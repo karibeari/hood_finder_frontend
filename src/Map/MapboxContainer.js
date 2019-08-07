@@ -5,7 +5,6 @@ import './Map.css'
 import PolygonContainer from './Polygons/PolygonContainer'
 import CustomFiltersButton from '../CustomFilters/CustomFiltersButton'
 
-
 const Map = ReactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_API_KEY
 })
@@ -25,7 +24,6 @@ export default class MapboxContainer extends Component {
   //     return <MapMarker school={school} key={school.id}/>
   //   })
   // }
-
 
   shouldComponentUpdate(nextProps) {
     return this.props.CustomFilterMenuView !== nextProps.customFilterMenuView
