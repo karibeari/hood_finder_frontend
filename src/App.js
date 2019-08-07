@@ -64,7 +64,7 @@ class App extends React.Component {
     let customFilters = {}
     filters.map((filter, index) => {
       const newFilter = {[filter.id]: {...this.state.customFilters[filter.id], priority: index + 1 }}
-      Object.assign(customFilters, newFilter)
+      return Object.assign(customFilters, newFilter)
     })
     this.setState({ customFilters })
   }
@@ -76,7 +76,7 @@ class App extends React.Component {
       let match_score = 0
 
       let { ranges, priority } = this.state.customFilters.population
-      ranges.map(range => {
+      ranges.forEach(range => {
         let { min, max } = range
         if (neighborhood.POPULATION_2010 >= min && neighborhood.POPULATION_2010 <= max) {
           match_score = num_of_filters + 1 - priority
@@ -85,7 +85,7 @@ class App extends React.Component {
 
       priority = this.state.customFilters.percent_under_18.priority
       ranges = this.state.customFilters.percent_under_18.ranges
-      ranges.map(range => {
+      ranges.forEach(range => {
         let { min, max } = range
         if (Math.round(neighborhood.PCT_LESS_18) >= min && Math.round(neighborhood.PCT_LESS_18) <= max) {
           match_score += num_of_filters + 1 - priority
@@ -94,7 +94,7 @@ class App extends React.Component {
 
       priority = this.state.customFilters.percent_over_65.priority
       ranges = this.state.customFilters.percent_over_65.ranges
-      ranges.map(range => {
+      ranges.forEach(range => {
         let { min, max } = range
         if (Math.round(neighborhood.PCT_65_PLUS) >= min && Math.round(neighborhood.PCT_65_PLUS) <= max) {
           match_score += num_of_filters + 1 - priority
@@ -103,7 +103,7 @@ class App extends React.Component {
 
       priority = this.state.customFilters.median_home_value.priority
       ranges = this.state.customFilters.median_home_value.ranges
-      ranges.map(range => {
+      ranges.forEach(range => {
         let { min, max } = range
         if (neighborhood.zestimate >= min && neighborhood.zestimate <= max) {
           match_score += num_of_filters + 1 - priority

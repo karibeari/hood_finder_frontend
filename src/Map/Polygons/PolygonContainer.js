@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import Polygon from './Polygon'
 import Key from './Keys/Key'
-import CustomFilterKey from './Keys/CustomFilterKey'
 import FilterButton from './FilterButton'
 import ClearPolygons from './ClearPolygons'
 import FilterPolygons from './FilterPolygons'
