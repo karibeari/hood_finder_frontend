@@ -156,7 +156,7 @@ class App extends React.Component {
   setActiveFilter = filter => this.setState({ activeFilter: filter})
 
   render(){
-    const { isLoggedIn, neighborhoods, schools, activeFilter, customFilterView, customFilterMenuView, customFilters} = this.state
+    const { isLoggedIn, neighborhoods, schools, activeFilter,  customFilterMenuView, customFilters} = this.state
     return(
       <div className="App">
         <Header logout={ this.logout } isLoggedIn={ isLoggedIn }/>
@@ -165,8 +165,6 @@ class App extends React.Component {
           schools={ schools }
           setActiveFilter={ this.setActiveFilter }
           activeFilter={ activeFilter }
-
-          customFilterView={ customFilterView }
           toggleCustomFilterMenu={ this.toggleCustomFilterMenu }
           customFilterMenuView={ customFilterMenuView.display }/>
         {customFilterMenuView.display ? <CustomFiltersContainer

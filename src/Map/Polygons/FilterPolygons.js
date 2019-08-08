@@ -44,16 +44,20 @@ const FilterPolygons = ({ neighborhoods, activeFilter }) => {
             color = "#FFF"
             break;
         }
-        return <Polygon mapNeighborhood={mapNeighborhood} color={color} neighborhood={neighborhood}  key={neighborhood.id}/>
+        return <Polygon
+          mapNeighborhood={mapNeighborhood}
+          color={color}
+          neighborhood={neighborhood}
+          key={neighborhood.id}/>
       } else {return null}
     })
   })
 
-    return(
-      <div>
-      { filterPolygons() }
-      </div>
-    )
+  return(
+    <div>
+    { filterPolygons() }
+    </div>
+  )
 }
 
 export default FilterPolygons

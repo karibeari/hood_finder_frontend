@@ -30,8 +30,9 @@ export default class MapboxContainer extends Component {
   }
 
   render() {
+    const { customFilterMenuView, toggleCustomFilterMenu, neighborhoods, setActiveFilter, activeFilter } = this.props
     return (
-      <div className={ this.props.customFilterMenuView ? "mapbox-container-small" : "mapbox-container"}>
+      <div className={ customFilterMenuView ? "mapbox-container-small" : "mapbox-container"}>
         <Map
           style="mapbox://styles/mapbox/streets-v8"
           zoom={[11]}
@@ -39,15 +40,14 @@ export default class MapboxContainer extends Component {
           >
           <CustomFiltersButton
             className="filter-menu-parent"
-            toggleCustomFilterMenu={ this.props.toggleCustomFilterMenu }
-            customFilterMenuView={ this.props.customFilterMenuView }
+            toggleCustomFilterMenu={ toggleCustomFilterMenu }
+            customFilterMenuView={ customFilterMenuView }
           />
           <ZoomControl />
           <PolygonContainer
-            neighborhoods={ this.props.neighborhoods }
-            customFilterView={ this.props.customFilterView }
-            setActiveFilter={ this.props.setActiveFilter }
-            activeFilter={ this.props.activeFilter }
+            neighborhoods={ neighborhoods }
+            setActiveFilter={ setActiveFilter }
+            activeFilter={ activeFilter }
             />
         </Map>
       </div>
