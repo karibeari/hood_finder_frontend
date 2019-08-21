@@ -8,10 +8,10 @@ import CustomFiltersContainer from "./CustomFilters/CustomFiltersContainer";
 import _ from 'lodash'
 // import Swal from 'sweetalert2'
 
-// const authenticateURL = "https://hood-hunter-denver.herokuapp.com/authenticate"
 const neighborhoodsURL = "https://hood-hunter-denver.herokuapp.com/neighborhoods"
 const schoolsURL = "https://hood-hunter-denver.herokuapp.com/schools"
 // const usersURL = "https://hood-hunter-denver.herokuapp.com/users"
+// const authenticateURL = "https://hood-hunter-denver.herokuapp.com/authenticate"
 
 const urls = [neighborhoodsURL, schoolsURL]
 
@@ -19,9 +19,9 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      isLoggedIn: false,
-      name: '',
-      userId: null,
+      // isLoggedIn: false,
+      // name: '',
+      // userId: null,
       customFilters: {
         population: {
           priority: 1,
@@ -134,7 +134,6 @@ class App extends React.Component {
     .then(data => this.setState({neighborhoods: data[0], schools: data[1]}))
   }
 
-//sets state with user adjusted filters
   setCustomFilters = (name, range) => {
     const ranges = [...this.state.customFilters[name].ranges, range]
     const filters = { ...this.state.customFilters[name], ranges: ranges }
@@ -153,10 +152,10 @@ class App extends React.Component {
     {display: !this.state.customFilterMenuView.display }
   })}
 
-  setActiveFilter = filter => this.setState({ activeFilter: filter})
+  setActiveFilter = filter => this.setState({ activeFilter: filter })
 
   render(){
-    const { isLoggedIn, neighborhoods, schools, activeFilter,  customFilterMenuView, customFilters} = this.state
+    const { isLoggedIn, neighborhoods, schools, activeFilter,  customFilterMenuView, customFilters } = this.state
     return(
       <div className="App">
         <Header logout={ this.logout } isLoggedIn={ isLoggedIn }/>
@@ -166,7 +165,8 @@ class App extends React.Component {
           setActiveFilter={ this.setActiveFilter }
           activeFilter={ activeFilter }
           toggleCustomFilterMenu={ this.toggleCustomFilterMenu }
-          customFilterMenuView={ customFilterMenuView.display }/>
+          customFilterMenuView={ customFilterMenuView.display }
+        />
         {customFilterMenuView.display ? <CustomFiltersContainer
           setCustomFilters={ this.setCustomFilters }
           clearCustomFilters={ this.clearCustomFilters }
@@ -266,8 +266,5 @@ class App extends React.Component {
 //     )
 //   }
 // }
-
-
-
 
 export default App;

@@ -48,7 +48,7 @@ export default class MapboxContainer extends Component {
             neighborhoods={ neighborhoods }
             setActiveFilter={ setActiveFilter }
             activeFilter={ activeFilter }
-            />
+          />
         </Map>
       </div>
     )

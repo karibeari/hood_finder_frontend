@@ -55,7 +55,7 @@ const FilterPolygons = ({ neighborhoods, activeFilter }) => {
 
   return(
     <div>
-    { filterPolygons() }
+      { filterPolygons() }
     </div>
   )
 }
