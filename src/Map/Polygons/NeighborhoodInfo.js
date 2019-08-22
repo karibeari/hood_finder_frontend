@@ -25,31 +25,30 @@ export default class NeighborhoodInfo extends Component {
     return(
       <section className="neighborhood-modal" ref={node=> this.node = node}>
         <h1 id="neighborhood-title">{NBRHD_NAME}</h1>
-        <div id="neighborhood-piecharts">
-          <PieChart
-            className='pie-chart'
-            data={[
-              ['Over 65', PCT_65_PLUS],
-              ['Under 18', PCT_LESS_18],
-              ['Between 18-65', PCT_65_PLUS-PCT_LESS_18]
-            ]}
-          />
-          <PieChart
-            className='pie-chart'
-            data={[
-              ['Asian', PCT_ASIAN,],
-              ['Black', PCT_BLACK],
-              ['Hispanic', PCT_HISPANIC],
-              ['White', PCT_WHITE],
-              ['Other Race', PCT_OTHER_RACE + PCT_TWO_OR_MORE_RACES + PCT_HAW_PACIS + PCT_AMERIND]
-            ]}
-          />
-        </div>
-        <div id='neighborhood-content'>
-          <h2>Population: { POPULATION_2010 } </h2>
+        <article className="neighborhood-modal-content">
+          <h2>Age Demographics</h2>
+            <PieChart
+              className='pie-chart'
+              data={[
+                ['Over 65', PCT_65_PLUS],
+                ['Under 18', PCT_LESS_18],
+                ['Between 18-65', PCT_65_PLUS-PCT_LESS_18]
+              ]}
+            />
+          <h2>Race Demographics</h2>
+            <PieChart
+              className='pie-chart'
+              data={[
+                ['Asian', PCT_ASIAN,],
+                ['Black', PCT_BLACK],
+                ['Hispanic', PCT_HISPANIC],
+                ['White', PCT_WHITE],
+                ['Other Race', PCT_OTHER_RACE + PCT_TWO_OR_MORE_RACES + PCT_HAW_PACIS + PCT_AMERIND]
+              ]}
+            />
+          <h2>Total Neighborood Population: { POPULATION_2010 } </h2>
           <h2>Median Home Value: ${ zestimate } </h2>
-        </div>
-
+        </article>
       </section>
     )
   }

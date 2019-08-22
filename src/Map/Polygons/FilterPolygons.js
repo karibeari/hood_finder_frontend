@@ -8,36 +8,36 @@ const FilterPolygons = ({ neighborhoods, activeFilter }) => {
     const { colors, limits, dataName } = activeFilter
     let color = ""
     return neighborhoods.map ( neighborhood => {
-      if (parseInt(mapNeighborhood.id) === neighborhood.id) {
-        switch (true) {
-          case (neighborhood[dataName] <= limits[0]):
+      if ( +mapNeighborhood.id === neighborhood.id ) {
+        switch ( true ) {
+          case ( neighborhood[dataName] <= limits[0] ):
             color = colors[0]
             break;
-          case (neighborhood[dataName] <= limits[1]):
+          case ( neighborhood[dataName] <= limits[1] ):
             color = colors[1]
             break;
-          case (neighborhood[dataName] <= limits[2]):
+          case ( neighborhood[dataName] <= limits[2] ):
             color = colors[2]
             break;
-          case (neighborhood[dataName] <= limits[3]):
+          case ( neighborhood[dataName] <= limits[3] ):
             color = colors[3]
             break;
-          case (neighborhood[dataName] <= limits[4]):
+          case ( neighborhood[dataName] <= limits[4] ):
             color = colors[4]
             break;
-          case (neighborhood[dataName] <= limits[5]):
+          case ( neighborhood[dataName] <= limits[5] ):
             color = colors[5]
             break;
-          case (neighborhood[dataName] <= limits[6]):
+          case ( neighborhood[dataName] <= limits[6] ):
             color = colors[6]
             break;
-          case (neighborhood[dataName] <= limits[7]):
+          case ( neighborhood[dataName] <= limits[7] ):
             color = colors[7]
             break;
-          case (neighborhood[dataName] <= limits[8]):
+          case ( neighborhood[dataName] <= limits[8] ):
             color = colors[8]
             break;
-          case (neighborhood[dataName] <= limits[9]):
+          case ( neighborhood[dataName] <= limits[9] ):
             color = colors[9]
             break;
           default:
@@ -45,18 +45,16 @@ const FilterPolygons = ({ neighborhoods, activeFilter }) => {
             break;
         }
         return <Polygon
-          mapNeighborhood={mapNeighborhood}
-          color={color}
-          neighborhood={neighborhood}
-          key={neighborhood.id}/>
-      } else {return null}
+          mapNeighborhood={ mapNeighborhood }
+          color={ color}
+          neighborhood={ neighborhood }
+          key={ neighborhood.id }/>
+      } else { return null }
     })
   })
 
   return(
-    <div>
-      { filterPolygons() }
-    </div>
+    filterPolygons()
   )
 }
 
