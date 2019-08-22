@@ -26,28 +26,38 @@ export default class NeighborhoodInfo extends Component {
       <section className="neighborhood-modal" ref={node=> this.node = node}>
         <h1 id="neighborhood-title">{NBRHD_NAME}</h1>
         <article className="neighborhood-modal-content">
-          <h2>Age Demographics</h2>
-            <PieChart
-              className='pie-chart'
-              data={[
-                ['Over 65', PCT_65_PLUS],
-                ['Under 18', PCT_LESS_18],
-                ['Between 18-65', PCT_65_PLUS-PCT_LESS_18]
-              ]}
-            />
-          <h2>Race Demographics</h2>
-            <PieChart
-              className='pie-chart'
-              data={[
-                ['Asian', PCT_ASIAN,],
-                ['Black', PCT_BLACK],
-                ['Hispanic', PCT_HISPANIC],
-                ['White', PCT_WHITE],
-                ['Other Race', PCT_OTHER_RACE + PCT_TWO_OR_MORE_RACES + PCT_HAW_PACIS + PCT_AMERIND]
-              ]}
-            />
-          <h2>Total Neighborood Population: { POPULATION_2010 } </h2>
-          <h2>Median Home Value: ${ zestimate } </h2>
+          <figure id="age">
+            <h2>Age Demographics</h2>
+              <PieChart
+                data={[
+                  ['Over 65', PCT_65_PLUS],
+                  ['Under 18', PCT_LESS_18],
+                  ['Between 18-65', PCT_65_PLUS-PCT_LESS_18]
+                ]}
+              />
+          </figure>
+          <figure id="race">
+            <h2>Race Demographics</h2>
+              <PieChart
+                data={[
+                  ['Asian', PCT_ASIAN,],
+                  ['Black', PCT_BLACK],
+                  ['Hispanic', PCT_HISPANIC],
+                  ['White', PCT_WHITE],
+                  ['Other Race', PCT_OTHER_RACE + PCT_TWO_OR_MORE_RACES + PCT_HAW_PACIS + PCT_AMERIND]
+                ]}
+              />
+          </figure>
+          <table>
+            <tr>
+              <td>Total Neighborood Population</td>
+              <td>{ POPULATION_2010 }</td>
+            </tr>
+            <tr>
+              <td>Median Home Value</td>
+              <td>{ zestimate }</td>
+            </tr>
+          </table>
         </article>
       </section>
     )
