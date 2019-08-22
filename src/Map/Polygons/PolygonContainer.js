@@ -19,7 +19,7 @@ export default class PolygonContainer extends Component {
     return (
       <div id="polygon-container">
         <div id="button-container">
-          {this.createButtons()}
+          { this.createButtons() }
         </div>
         { activeFilter.id === 'noFilter' && <ClearPolygons neighborhoods={ neighborhoods } activeFilter={ activeFilter } /> }
         { activeFilter.id !== 'noFilter' &&  <FilterPolygons neighborhoods={ neighborhoods } activeFilter={ activeFilter }  /> }
