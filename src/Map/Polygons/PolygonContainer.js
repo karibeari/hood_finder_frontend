@@ -21,8 +21,8 @@ export default class PolygonContainer extends Component {
         <div id="button-container">
           {this.createButtons()}
         </div>
-        { activeFilter.id === 'noFilter' && <ClearPolygons neighborhoods={ neighborhoods } activeFilter={ activeFilter } setMapNeighborhood={ this.props.setMapNeighborhood } /> }
-        { activeFilter.id !== 'noFilter' &&  <FilterPolygons neighborhoods={ neighborhoods } activeFilter={ activeFilter } setMapNeighborhood={ this.props.setMapNeighborhood } /> }
+        { activeFilter.id === 'noFilter' && <ClearPolygons neighborhoods={ neighborhoods } activeFilter={ activeFilter } /> }
+        { activeFilter.id !== 'noFilter' &&  <FilterPolygons neighborhoods={ neighborhoods } activeFilter={ activeFilter }  /> }
         <div id="key-container">
           { activeFilter.id !== 'noFilter' && <Key activeFilter={ activeFilter }/> }
         </div>

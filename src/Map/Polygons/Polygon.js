@@ -15,8 +15,7 @@ export default class Polygon extends Component {
 
   onHover = () => { this.setState({...this.state, hover: !this.state.hover }) }
 
-  toggleInfo = () => { this.setState({...this.state, showInfo: !this.state.showInfo })
-    this.props.setMapNeighborhood(this.props.neighborhood)}
+  toggleInfo = () => { this.setState({...this.state, showInfo: !this.state.showInfo }) }
 
   render() {
     let { mapNeighborhood, color, neighborhood } = this.props
@@ -46,10 +45,8 @@ export default class Polygon extends Component {
             }}
           />
         </Layer>
-
+        { this.state.showInfo && <NeighborhoodInfo toggleInfo={ this.toggleInfo } neighborhood={neighborhood}/> }
       </>
     )
   }
 }
-
-  // { this.state.showInfo && <NeighborhoodInfo toggleInfo={ this.toggleInfo } neighborhood={neighborhood}/> }
