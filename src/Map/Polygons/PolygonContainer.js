@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Key from './Keys/Key'
+import Key from './Key'
 import FilterButton from './FilterButton'
 import ClearPolygons from './ClearPolygons'
 import FilterPolygons from './FilterPolygons'

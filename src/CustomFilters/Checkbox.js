@@ -50,8 +50,8 @@ export default class Checkbox extends Component {
   render() {
     return(
       <>
-      <input type="checkbox" name={this.props.range} onChange={ this.handleCheckboxChange } />
-      <p className="checkbox">{this.props.range}</p>
+        <input type="checkbox" name={this.props.range} onChange={ this.handleCheckboxChange } />
+        <p className="checkbox">{this.props.range}</p>
       </>
     )
   }
