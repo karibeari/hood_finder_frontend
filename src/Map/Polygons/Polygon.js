@@ -15,7 +15,8 @@ export default class Polygon extends Component {
 
   onHover = () => { this.setState({...this.state, hover: !this.state.hover }) }
 
-  toggleInfo = () => { this.setState({...this.state, showInfo: !this.state.showInfo })}
+  toggleInfo = () => { this.setState({...this.state, showInfo: !this.state.showInfo })
+    this.props.setMapNeighborhood(this.props.neighborhood)}
 
   render() {
     let { mapNeighborhood, color, neighborhood } = this.props
@@ -29,25 +30,26 @@ export default class Polygon extends Component {
                 'fill-opacity': opacity,
                 'fill-outline-color': "#FFF"
               }}
-
               className="polygon"
         >
-            <Feature
-              coordinates={ [mapNeighborhood.coordinates] }
-              style={{'cursor':'pointer'}}
-              onClick={ () => this.toggleInfo() }
-              onMouseEnter={ () => {
-                opacity = 1
-                this.onHover()
-              }}
-              onMouseLeave={ () => {
-                opacity = 0.7
-                this.onHover()
-              }}
-            />
+          <Feature
+            coordinates={ [mapNeighborhood.coordinates] }
+            style={{'cursor':'pointer'}}
+            onClick={ () => this.toggleInfo() }
+            onMouseEnter={ () => {
+              opacity = 1
+              this.onHover()
+            }}
+            onMouseLeave={ () => {
+              opacity = 0.7
+              this.onHover()
+            }}
+          />
         </Layer>
-        { this.state.showInfo && <NeighborhoodInfo showInfo={ this.state.showInfo } toggleInfo={ this.toggleInfo } neighborhood={neighborhood}/> }
+
       </>
     )
   }
 }
+
+  // { this.state.showInfo && <NeighborhoodInfo toggleInfo={ this.toggleInfo } neighborhood={neighborhood}/> }

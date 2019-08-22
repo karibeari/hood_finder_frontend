@@ -4,6 +4,7 @@ import ReactMapboxGl, {  ZoomControl } from 'react-mapbox-gl';
 import './Map.css'
 import PolygonContainer from './Polygons/PolygonContainer'
 import CustomFiltersButton from '../CustomFilters/CustomFiltersButton'
+import NeighborhoodInfo from './Polygons/NeighborhoodInfo'
 
 const Map = ReactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_API_KEY
@@ -18,14 +19,11 @@ export default class MapboxContainer extends Component {
     }
   }
 
-  // displaySchools = () => {
-  //   const schools = this.props.schools || []
-  //   return schools.map(school => {
-  //     return <MapMarker school={school} key={school.id}/>
-  //   })
-  // }
+  setMapNeighborhood = ( neighborhood ) => {
+    this.setState({ neighborhood })
+  }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate( nextProps ) {
     return this.props.CustomFilterMenuView !== nextProps.customFilterMenuView
   }
 
@@ -48,7 +46,9 @@ export default class MapboxContainer extends Component {
             neighborhoods={ neighborhoods }
             setActiveFilter={ setActiveFilter }
             activeFilter={ activeFilter }
+            setMapNeighborhood={ this.setMapNeighborhood }
           />
+          { this.state.neighborhood !== null && <NeighborhoodInfo neighborhood={ this.state.neighborhood }/> }
         </Map>
       </div>
     )

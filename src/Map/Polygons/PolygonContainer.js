@@ -7,7 +7,7 @@ import { filters } from '../../Filters'
 
 export default class PolygonContainer extends Component {
 
-  createButtons = () => filters.map( filter => <FilterButton key={ filter.id } filter={ filter} setActiveFilter={ this.props.setActiveFilter }/>)
+  createButtons = () => filters.map( filter => <FilterButton key={ filter.id } filter={ filter } setActiveFilter={ this.props.setActiveFilter }/>)
 
   shouldComponentUpdate(nextProps) {
     const { activeFilter, neighborhoods } = this.props
@@ -21,8 +21,8 @@ export default class PolygonContainer extends Component {
         <div id="button-container">
           {this.createButtons()}
         </div>
-        { activeFilter.id === 'noFilter' && <ClearPolygons neighborhoods={ neighborhoods } activeFilter={ activeFilter }/> }
-        { activeFilter.id !== 'noFilter' &&  <FilterPolygons neighborhoods={ neighborhoods } activeFilter={ activeFilter }/> }
+        { activeFilter.id === 'noFilter' && <ClearPolygons neighborhoods={ neighborhoods } activeFilter={ activeFilter } setMapNeighborhood={ this.props.setMapNeighborhood } /> }
+        { activeFilter.id !== 'noFilter' &&  <FilterPolygons neighborhoods={ neighborhoods } activeFilter={ activeFilter } setMapNeighborhood={ this.props.setMapNeighborhood } /> }
         <div id="key-container">
           { activeFilter.id !== 'noFilter' && <Key activeFilter={ activeFilter }/> }
         </div>
