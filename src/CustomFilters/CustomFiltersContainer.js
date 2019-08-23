@@ -68,10 +68,8 @@ export default class CustomFiltersContainer extends Component {
     );
 
     this.setState({ items })
-
     this.props.setPriority(items)
   }
-
 
   render() {
     return (
