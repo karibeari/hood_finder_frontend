@@ -86,6 +86,7 @@ export default class UserPrefsContainer extends Component {
               {this.state.items.map((item, index) => (
                 <div className="priority" key={item.id}>
                 <Draggable draggableId={item.id} index={index}>
+                <Draggable  draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}
