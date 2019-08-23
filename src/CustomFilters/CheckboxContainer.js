@@ -5,12 +5,6 @@ import Checkbox from './Checkbox'
 
 const CheckboxContainer = (props) =>  {
 
-  // handleChange = () => {
-  //   let { name } = this.props
-  //   name = name.toLowerCase().split(' ').join('_')
-  //   this.props.setCustomFilters(name, this.state.range)
-  // }
-
   const displayCheckboxes = () => {
     return props.filter.ranges.map(range => {
        return <Checkbox
