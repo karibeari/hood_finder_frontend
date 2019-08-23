@@ -44,7 +44,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getListStyle = isDraggingOver => ({
   backgroundImage: "linear-gradient(#6CAAD1, #FF9585)",
   padding: "5%",
-  overflow: 'scroll'
+  overflow: "auto"
 })
 
 export default class UserPrefsContainer extends Component {
